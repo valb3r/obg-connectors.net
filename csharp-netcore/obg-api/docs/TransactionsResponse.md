@@ -1,0 +1,12 @@
+# Org.OpenAPITools.Model.TransactionsResponse
+Body of the JSON response for a successful read transaction list request. This account report contains transactions resulting from the query parameters. 
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Account** | [**AccountReference1**](AccountReference1.md) |  | [optional] 
+**Transactions** | [**AccountReport**](AccountReport.md) |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

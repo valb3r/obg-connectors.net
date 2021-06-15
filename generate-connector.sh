@@ -17,5 +17,5 @@ curl "https://raw.githubusercontent.com/adorsys/open-banking-gateway/master/opba
 wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.1.1/openapi-generator-cli-5.1.1.jar -O openapi-generator-cli.jar
 
 
-java -jar openapi-generator-cli.jar generate -i apis/merged-api.yml -g csharp-netcore -o csharp/obg-api --skip-validate-spec -p pubName=obg-api -p pubLibrary=obg-api \
+java -jar openapi-generator-cli.jar generate -i apis/merged-api.yml -g csharp-netcore -o csharp-netcore/obg-api --skip-validate-spec -p pubName=obg-api -p pubLibrary=obg-api \
      --global-property apiTests=false,modelTests=false --enable-post-process-file
