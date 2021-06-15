@@ -1,0 +1,35 @@
+@startuml
+
+actor "FinTech client (PSU)" as psu
+
+box "FinTech\n'http://example.com/FinTech'" #DarkSeaGreen
+    participant "FintechBankConnService" as FinTechApi
+end box
+box "OpenBankingGateway" #LightGray
+    participant "OpenBankingGateway TPP API" as ObgTppApi
+    participant "OpenBankingGateway Consent UI and API\n(http://example.com/ais)" as ObgConsentUiAndApi
+end box
+
+box "Bank (ASPSP)" #LightSkyBlue
+  participant "Bank (ASPSP) Open API" as AspspApi
+end box
+
+psu -> FinTechApi ++ : I want to import\n"Sparkasse Nuremberg"\ntransactions
+FinTechApi -> ObgTppApi++ : TPPBankSearchApi.BankSearchGET("Sparkasse Nuremberg")
+return 200_BankSearchResponse\n{uuid: "1234"}
+FinTechApi -> ObgTppApi++ : TPPBankingAPIAccountInformationServiceAISApi.GetTransactionsWithHttpInfo(bankId: 1234)
+return 202_RedirectRequired\n{Service-Session-ID: "SVC-1", Authorization-Session-ID: "AUTH-1", Location: "http://example.com/ais"}
+FinTechApi -> FinTechApi: Associate 'Service-Session-ID' "SVC-1" \n and 'Authorization-Session-ID' "AUTH-1" with current user
+return 303_Redirect to 'http://example.com/ais'
+psu -> ObgConsentUiAndApi++ : Authorize consent
+return 202_NeedLogin
+psu -> ObgConsentUiAndApi++ : Provide necessary credentials
+ObgConsentUiAndApi -> AspspApi++ : Authorize consent
+return 200_AspspConsent
+return 303_Redirect back to FinTech 'http://example.com/FinTech'
+psu -> FinTechApi++ : Open dashboard
+FinTechApi -> ObgTppApi++: ConsentConfirmationApi.ConfirmConsent(Authorization-Session-ID: "AUTH-1")
+return 200_Ok
+FinTechApi -> ObgTppApi++ : TPPBankingAPIAccountInformationServiceAISApi.GetTransactionsWithHttpInfo(bankId: 1234, 'Service-Session-ID': "SVC-1")
+return 200_Ok: Users' (PSU) transactions list
+@enduml
