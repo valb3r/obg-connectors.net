@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="initiatepayment"></a>
 # **InitiatePayment**
-> PaymentInitiationResponse InitiatePayment (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, bool? xPisPsuAuthenticationRequired = null)
+> PaymentInitiationResponse InitiatePayment (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, bool? xPsuAuthenticationRequired = null)
 
 Payment initiation request
 
@@ -46,12 +46,12 @@ namespace Example
             var xRequestSignature = xRequestSignature_example;  // string | A signature of the request by the TPP fintech.  (optional) 
             var fintechID = fintech_123;  // string | Unique ID that identifies fintech.  (optional) 
             var bankID = 1234-0XGJK;  // string | A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional) 
-            var xPisPsuAuthenticationRequired = true;  // bool? | If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional)  (default to true)
+            var xPsuAuthenticationRequired = true;  // bool? | If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional)  (default to true)
 
             try
             {
                 // Payment initiation request
-                PaymentInitiationResponse result = apiInstance.InitiatePayment(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPisPsuAuthenticationRequired);
+                PaymentInitiationResponse result = apiInstance.InitiatePayment(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
  **xRequestSignature** | **string**| A signature of the request by the TPP fintech.  | [optional] 
  **fintechID** | **string**| Unique ID that identifies fintech.  | [optional] 
  **bankID** | **string**| A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  | [optional] 
- **xPisPsuAuthenticationRequired** | **bool?**| If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  | [optional] [default to true]
+ **xPsuAuthenticationRequired** | **bool?**| If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  | [optional] [default to true]
 
 ### Return type
 

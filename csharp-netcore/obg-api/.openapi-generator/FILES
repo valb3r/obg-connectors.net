@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 Org.OpenAPITools.sln
 README.md
 appveyor.yml
@@ -17,6 +16,7 @@ docs/AisAccountAccessInfo.md
 docs/AisConsentRequest.md
 docs/Amount.md
 docs/Amount1.md
+docs/AnalyticsReportDetails.md
 docs/AuthStateConsentAuthorizationApi.md
 docs/AuthViolation.md
 docs/AuthorizeRequest.md
@@ -38,6 +38,7 @@ docs/GeneralError.md
 docs/HrefType.md
 docs/LinksAccountDetails.md
 docs/LoginResponse.md
+docs/Paging.md
 docs/PaymentConfirmationApi.md
 docs/PaymentInformationResponse.md
 docs/PaymentInitiation.md
@@ -108,6 +109,7 @@ src/Org.OpenAPITools/Model/AisAccountAccessInfo.cs
 src/Org.OpenAPITools/Model/AisConsentRequest.cs
 src/Org.OpenAPITools/Model/Amount.cs
 src/Org.OpenAPITools/Model/Amount1.cs
+src/Org.OpenAPITools/Model/AnalyticsReportDetails.cs
 src/Org.OpenAPITools/Model/AuthViolation.cs
 src/Org.OpenAPITools/Model/AuthorizeRequest.cs
 src/Org.OpenAPITools/Model/Balance.cs
@@ -126,6 +128,7 @@ src/Org.OpenAPITools/Model/GeneralError.cs
 src/Org.OpenAPITools/Model/HrefType.cs
 src/Org.OpenAPITools/Model/LinksAccountDetails.cs
 src/Org.OpenAPITools/Model/LoginResponse.cs
+src/Org.OpenAPITools/Model/Paging.cs
 src/Org.OpenAPITools/Model/PaymentInformationResponse.cs
 src/Org.OpenAPITools/Model/PaymentInitiation.cs
 src/Org.OpenAPITools/Model/PaymentInitiationResponse.cs

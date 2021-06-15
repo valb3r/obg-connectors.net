@@ -42,11 +42,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <returns>AccountList</returns>
-        AccountList GetAccounts(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?));
+        AccountList GetAccounts(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?));
 
         /// <summary>
         /// Provides list of available accounts
@@ -64,11 +65,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <returns>ApiResponse of AccountList</returns>
-        ApiResponse<AccountList> GetAccountsWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?));
+        ApiResponse<AccountList> GetAccountsWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?));
         /// <summary>
         /// Provides list of transactions by given account
         /// </summary>
@@ -86,6 +88,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -93,8 +96,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>TransactionsResponse</returns>
-        TransactionsResponse GetTransactions(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?));
+        TransactionsResponse GetTransactions(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?));
 
         /// <summary>
         /// Provides list of transactions by given account
@@ -113,6 +119,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -120,8 +127,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>ApiResponse of TransactionsResponse</returns>
-        ApiResponse<TransactionsResponse> GetTransactionsWithHttpInfo(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?));
+        ApiResponse<TransactionsResponse> GetTransactionsWithHttpInfo(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?));
         /// <summary>
         /// Provides consent for accounts and transactions
         /// </summary>
@@ -138,14 +148,17 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>TransactionsResponse</returns>
-        TransactionsResponse GetTransactionsWithoutAccountId(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?));
+        TransactionsResponse GetTransactionsWithoutAccountId(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?));
 
         /// <summary>
         /// Provides consent for accounts and transactions
@@ -163,14 +176,17 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>ApiResponse of TransactionsResponse</returns>
-        ApiResponse<TransactionsResponse> GetTransactionsWithoutAccountIdWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?));
+        ApiResponse<TransactionsResponse> GetTransactionsWithoutAccountIdWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?));
         #endregion Synchronous Operations
     }
 
@@ -196,12 +212,13 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AccountList</returns>
-        System.Threading.Tasks.Task<AccountList> GetAccountsAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<AccountList> GetAccountsAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Provides list of available accounts
@@ -219,12 +236,13 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AccountList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AccountList>> GetAccountsWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AccountList>> GetAccountsWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provides list of transactions by given account
         /// </summary>
@@ -242,6 +260,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -249,9 +268,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TransactionsResponse</returns>
-        System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Provides list of transactions by given account
@@ -270,6 +292,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -277,9 +300,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TransactionsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TransactionsResponse>> GetTransactionsWithHttpInfoAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TransactionsResponse>> GetTransactionsWithHttpInfoAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provides consent for accounts and transactions
         /// </summary>
@@ -296,15 +322,18 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TransactionsResponse</returns>
-        System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsWithoutAccountIdAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsWithoutAccountIdAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Provides consent for accounts and transactions
@@ -322,15 +351,18 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TransactionsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TransactionsResponse>> GetTransactionsWithoutAccountIdWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TransactionsResponse>> GetTransactionsWithoutAccountIdWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -464,13 +496,14 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <returns>AccountList</returns>
-        public AccountList GetAccounts(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?))
+        public AccountList GetAccounts(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?))
         {
-            Org.OpenAPITools.Client.ApiResponse<AccountList> localVarResponse = GetAccountsWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, withBalance, online);
+            Org.OpenAPITools.Client.ApiResponse<AccountList> localVarResponse = GetAccountsWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, withBalance, online);
             return localVarResponse.Data;
         }
 
@@ -487,11 +520,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <returns>ApiResponse of AccountList</returns>
-        public Org.OpenAPITools.Client.ApiResponse<AccountList> GetAccountsWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?))
+        public Org.OpenAPITools.Client.ApiResponse<AccountList> GetAccountsWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -549,6 +583,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -591,14 +629,15 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of AccountList</returns>
-        public async System.Threading.Tasks.Task<AccountList> GetAccountsAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<AccountList> GetAccountsAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<AccountList> localVarResponse = await GetAccountsWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, withBalance, online, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<AccountList> localVarResponse = await GetAccountsWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, withBalance, online, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -615,12 +654,13 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="withBalance">For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (AccountList)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AccountList>> GetAccountsWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<AccountList>> GetAccountsWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), bool? withBalance = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -680,6 +720,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -724,6 +768,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -731,10 +776,13 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>TransactionsResponse</returns>
-        public TransactionsResponse GetTransactions(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?))
+        public TransactionsResponse GetTransactions(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?))
         {
-            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = GetTransactionsWithHttpInfo(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online);
+            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = GetTransactionsWithHttpInfo(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online, analytics, page, pageSize);
             return localVarResponse.Data;
         }
 
@@ -752,6 +800,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -759,8 +808,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>ApiResponse of TransactionsResponse</returns>
-        public Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> GetTransactionsWithHttpInfo(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?))
+        public Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> GetTransactionsWithHttpInfo(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?))
         {
             // verify the required parameter 'accountId' is set
             if (accountId == null)
@@ -823,6 +875,18 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "online", online));
             }
+            if (analytics != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "analytics", analytics));
+            }
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (pageSize != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+            }
             if (xTimestampUTC != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("X-Timestamp-UTC", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xTimestampUTC)); // header parameter
@@ -839,6 +903,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -882,6 +950,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -889,11 +958,14 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TransactionsResponse</returns>
-        public async System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = await GetTransactionsWithHttpInfoAsync(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = await GetTransactionsWithHttpInfoAsync(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online, analytics, page, pageSize, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -911,6 +983,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
@@ -918,9 +991,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
         /// <param name="online">Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional, default to true)</param>
+        /// <param name="analytics">Analyze transactions (bookings) for categorizations.  (optional, default to false)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TransactionsResponse)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<TransactionsResponse>> GetTransactionsWithHttpInfoAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<TransactionsResponse>> GetTransactionsWithHttpInfoAsync(string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), bool? online = default(bool?), bool? analytics = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'accountId' is set
             if (accountId == null)
@@ -985,6 +1061,18 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "online", online));
             }
+            if (analytics != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "analytics", analytics));
+            }
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (pageSize != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+            }
             if (xTimestampUTC != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("X-Timestamp-UTC", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xTimestampUTC)); // header parameter
@@ -1001,6 +1089,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -1044,16 +1136,19 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>TransactionsResponse</returns>
-        public TransactionsResponse GetTransactionsWithoutAccountId(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?))
+        public TransactionsResponse GetTransactionsWithoutAccountId(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?))
         {
-            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = GetTransactionsWithoutAccountIdWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList);
+            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = GetTransactionsWithoutAccountIdWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, page, pageSize);
             return localVarResponse.Data;
         }
 
@@ -1070,14 +1165,17 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <returns>ApiResponse of TransactionsResponse</returns>
-        public Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> GetTransactionsWithoutAccountIdWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?))
+        public Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> GetTransactionsWithoutAccountIdWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -1131,6 +1229,14 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "deltaList", deltaList));
             }
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (pageSize != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+            }
             if (xTimestampUTC != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("X-Timestamp-UTC", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xTimestampUTC)); // header parameter
@@ -1147,6 +1253,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -1189,17 +1299,20 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of TransactionsResponse</returns>
-        public async System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsWithoutAccountIdAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<TransactionsResponse> GetTransactionsWithoutAccountIdAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = await GetTransactionsWithoutAccountIdWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<TransactionsResponse> localVarResponse = await GetTransactionsWithoutAccountIdWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, page, pageSize, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1216,15 +1329,18 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="serviceSessionID">Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional)</param>
         /// <param name="dateFrom">Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="dateTo">End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional)</param>
         /// <param name="entryReferenceFrom">This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional)</param>
         /// <param name="bookingStatus">Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  (optional)</param>
         /// <param name="deltaList">This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional)</param>
+        /// <param name="page">Result page that you want to retrieve.  Minimum value is 0.  (optional)</param>
+        /// <param name="pageSize">Maximum number of records per page.  Can be at most 500.  (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (TransactionsResponse)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<TransactionsResponse>> GetTransactionsWithoutAccountIdWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<TransactionsResponse>> GetTransactionsWithoutAccountIdWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), Guid? serviceSessionID = default(Guid?), DateTime? dateFrom = default(DateTime?), DateTime? dateTo = default(DateTime?), string entryReferenceFrom = default(string), string bookingStatus = default(string), bool? deltaList = default(bool?), int? page = default(int?), int? pageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -1280,6 +1396,14 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "deltaList", deltaList));
             }
+            if (page != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "page", page));
+            }
+            if (pageSize != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+            }
             if (xTimestampUTC != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("X-Timestamp-UTC", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xTimestampUTC)); // header parameter
@@ -1296,6 +1420,10 @@ namespace Org.OpenAPITools.Api
             if (bankID != null)
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
+            }
+            if (xPsuAuthenticationRequired != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter

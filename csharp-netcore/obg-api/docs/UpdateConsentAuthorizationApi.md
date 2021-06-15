@@ -114,7 +114,7 @@ namespace Example
             var authId = abc123;  // string | Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. 
             var xRequestID = new Guid(); // Guid | Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. 
             var X_XSRF_TOKEN = abc123.faadsf93nlas32wx;  // string | XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. 
-            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional) 
+            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional) 
             var psuAuthRequest = new PsuAuthRequest(); // PsuAuthRequest |  (optional) 
 
             try
@@ -141,7 +141,7 @@ Name | Type | Description  | Notes
  **authId** | **string**| Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.  | 
  **xRequestID** | [**Guid**](Guid.md)| Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well.  | 
  **X_XSRF_TOKEN** | **string**| XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie.  | 
- **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter | [optional] 
+ **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter. | [optional] 
  **psuAuthRequest** | [**PsuAuthRequest**](PsuAuthRequest.md)|  | [optional] 
 
 ### Return type

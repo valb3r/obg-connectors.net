@@ -75,7 +75,7 @@ namespace Example
             config.BasePath = "http://localhost";
             var apiInstance = new AuthStateConsentAuthorizationApi(config);
             var authId = abc123;  // string | Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. 
-            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional) 
+            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional) 
 
             try
             {
@@ -104,15 +104,14 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuthStateConsentAuthorizationApi* | [**AuthUsingGET**](docs/AuthStateConsentAuthorizationApi.md#authusingget) | **GET** /v1/consent/{auth-id} | Redirect entry point for initiating a consent authorization process. 
 *ConsentConfirmationApi* | [**ConfirmConsent**](docs/ConsentConfirmationApi.md#confirmconsent) | **POST** /v1/banking/consents/{auth-id}/confirm | Issues new PSU Consent Session Token.
-*FromASPSPConsentAuthorizationApi* | [**FromAspspNokUsingGET**](docs/FromASPSPConsentAuthorizationApi.md#fromaspspnokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/nok | Redirecting back from ASPSP to TPP after a failed consent authorization.
-*FromASPSPConsentAuthorizationApi* | [**FromAspspOkUsingGET**](docs/FromASPSPConsentAuthorizationApi.md#fromaspspokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/ok | Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
+*FromASPSPConsentAuthorizationApi* | [**FromAspspNokUsingGET**](docs/FromASPSPConsentAuthorizationApi.md#fromaspspnokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/nok/{fromAspspRedirectCode} | Redirecting back from ASPSP to TPP after a failed consent authorization.
+*FromASPSPConsentAuthorizationApi* | [**FromAspspOkUsingGET**](docs/FromASPSPConsentAuthorizationApi.md#fromaspspokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/ok/{fromAspspRedirectCode} | Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
 *PaymentConfirmationApi* | [**ConfirmPayment**](docs/PaymentConfirmationApi.md#confirmpayment) | **POST** /v1/banking/payments/{auth-id}/confirm | Issues new PSU Consent Session Token.
 *PsuAuthenticationApi* | [**Login**](docs/PsuAuthenticationApi.md#login) | **POST** /v1/psu/login | Login user to open-banking
 *PsuAuthenticationApi* | [**Registration**](docs/PsuAuthenticationApi.md#registration) | **POST** /v1/psu/register | registration user in open-banking db
 *PsuAuthenticationApi* | [**RenewalAuthorizationSessionKey**](docs/PsuAuthenticationApi.md#renewalauthorizationsessionkey) | **GET** /v1/psu/ais/{authorization-id}/renewal-authorization-session-key | the AuthorizationSessionKey is replaces with a new one
-*PsuAuthenticationAndConsentApprovalApi* | [**LoginForAnonymousPaymentApproval**](docs/PsuAuthenticationAndConsentApprovalApi.md#loginforanonymouspaymentapproval) | **POST** /v1/psu/pis/{authorization-id}/anonymous | Login user to open-banking to perform payment (anonymous to OPBA)
-*PsuAuthenticationAndConsentApprovalApi* | [**LoginForApproval**](docs/PsuAuthenticationAndConsentApprovalApi.md#loginforapproval) | **POST** /v1/psu/ais/{authorization-id}/for-approval/login | Login user to open-banking
-*PsuAuthenticationAndConsentApprovalApi* | [**LoginForPaymentApproval**](docs/PsuAuthenticationAndConsentApprovalApi.md#loginforpaymentapproval) | **POST** /v1/psu/pis/{authorization-id}/for-approval/login | Login user to open-banking to perform payment
+*PsuAuthenticationAndConsentApprovalApi* | [**LoginForAnonymousApproval**](docs/PsuAuthenticationAndConsentApprovalApi.md#loginforanonymousapproval) | **POST** /v1/psu/{authorization-id}/for-approval/anonymous | Login user to open-banking to perform payment (anonymous to OPBA)
+*PsuAuthenticationAndConsentApprovalApi* | [**LoginForApproval**](docs/PsuAuthenticationAndConsentApprovalApi.md#loginforapproval) | **POST** /v1/psu/{authorization-id}/for-approval/login | Login user to open-banking
 *TPPBankingAPIAccountInformationServiceAISApi* | [**GetAccounts**](docs/TPPBankingAPIAccountInformationServiceAISApi.md#getaccounts) | **GET** /v1/banking/ais/accounts | Provides list of available accounts
 *TPPBankingAPIAccountInformationServiceAISApi* | [**GetTransactions**](docs/TPPBankingAPIAccountInformationServiceAISApi.md#gettransactions) | **GET** /v1/banking/ais/accounts/{account-id}/transactions | Provides list of transactions by given account
 *TPPBankingAPIAccountInformationServiceAISApi* | [**GetTransactionsWithoutAccountId**](docs/TPPBankingAPIAccountInformationServiceAISApi.md#gettransactionswithoutaccountid) | **GET** /v1/banking/ais/transactions | Provides consent for accounts and transactions
@@ -143,6 +142,7 @@ Class | Method | HTTP request | Description
  - [Model.AisConsentRequest](docs/AisConsentRequest.md)
  - [Model.Amount](docs/Amount.md)
  - [Model.Amount1](docs/Amount1.md)
+ - [Model.AnalyticsReportDetails](docs/AnalyticsReportDetails.md)
  - [Model.AuthViolation](docs/AuthViolation.md)
  - [Model.AuthorizeRequest](docs/AuthorizeRequest.md)
  - [Model.Balance](docs/Balance.md)
@@ -161,6 +161,7 @@ Class | Method | HTTP request | Description
  - [Model.HrefType](docs/HrefType.md)
  - [Model.LinksAccountDetails](docs/LinksAccountDetails.md)
  - [Model.LoginResponse](docs/LoginResponse.md)
+ - [Model.Paging](docs/Paging.md)
  - [Model.PaymentInformationResponse](docs/PaymentInformationResponse.md)
  - [Model.PaymentInitiation](docs/PaymentInitiation.md)
  - [Model.PaymentInitiationResponse](docs/PaymentInitiationResponse.md)

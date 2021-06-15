@@ -34,7 +34,7 @@ namespace Org.OpenAPITools.Api
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <returns>ConsentAuth</returns>
         ConsentAuth AuthUsingGET(string authId, string redirectCode = default(string));
 
@@ -46,7 +46,7 @@ namespace Org.OpenAPITools.Api
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
         ApiResponse<ConsentAuth> AuthUsingGETWithHttpInfo(string authId, string redirectCode = default(string));
         #endregion Synchronous Operations
@@ -66,7 +66,7 @@ namespace Org.OpenAPITools.Api
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
         System.Threading.Tasks.Task<ConsentAuth> AuthUsingGETAsync(string authId, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -79,7 +79,7 @@ namespace Org.OpenAPITools.Api
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
         System.Threading.Tasks.Task<ApiResponse<ConsentAuth>> AuthUsingGETWithHttpInfoAsync(string authId, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -208,7 +208,7 @@ namespace Org.OpenAPITools.Api
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <returns>ConsentAuth</returns>
         public ConsentAuth AuthUsingGET(string authId, string redirectCode = default(string))
         {
@@ -221,7 +221,7 @@ namespace Org.OpenAPITools.Api
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
         public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> AuthUsingGETWithHttpInfo(string authId, string redirectCode = default(string))
         {
@@ -269,7 +269,7 @@ namespace Org.OpenAPITools.Api
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
         public async System.Threading.Tasks.Task<ConsentAuth> AuthUsingGETAsync(string authId, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
@@ -283,7 +283,7 @@ namespace Org.OpenAPITools.Api
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
         public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ConsentAuth>> AuthUsingGETWithHttpInfoAsync(string authId, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))

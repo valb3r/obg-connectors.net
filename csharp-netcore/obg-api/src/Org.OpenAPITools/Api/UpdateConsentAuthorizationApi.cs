@@ -63,7 +63,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <returns>ConsentAuth</returns>
         ConsentAuth EmbeddedUsingPOST(string authId, Guid xRequestID, string X_XSRF_TOKEN, string redirectCode = default(string), PsuAuthRequest psuAuthRequest = default(PsuAuthRequest));
@@ -78,7 +78,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
         ApiResponse<ConsentAuth> EmbeddedUsingPOSTWithHttpInfo(string authId, Guid xRequestID, string X_XSRF_TOKEN, string redirectCode = default(string), PsuAuthRequest psuAuthRequest = default(PsuAuthRequest));
@@ -157,7 +157,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
@@ -173,7 +173,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
@@ -483,7 +483,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <returns>ConsentAuth</returns>
         public ConsentAuth EmbeddedUsingPOST(string authId, Guid xRequestID, string X_XSRF_TOKEN, string redirectCode = default(string), PsuAuthRequest psuAuthRequest = default(PsuAuthRequest))
@@ -499,7 +499,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
         public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> EmbeddedUsingPOSTWithHttpInfo(string authId, Guid xRequestID, string X_XSRF_TOKEN, string redirectCode = default(string), PsuAuthRequest psuAuthRequest = default(PsuAuthRequest))
@@ -558,7 +558,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
@@ -575,7 +575,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
         /// <param name="X_XSRF_TOKEN">XSRF parameter used to validate a SessionCookie. The token matches the auth-id included in the requestpath and prefixing the cookie. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional)</param>
         /// <param name="psuAuthRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>

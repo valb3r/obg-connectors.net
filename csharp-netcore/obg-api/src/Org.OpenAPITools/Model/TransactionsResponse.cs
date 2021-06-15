@@ -36,10 +36,14 @@ namespace Org.OpenAPITools.Model
         /// </summary>
         /// <param name="account">account.</param>
         /// <param name="transactions">transactions.</param>
-        public TransactionsResponse(AccountReference1 account = default(AccountReference1), AccountReport transactions = default(AccountReport))
+        /// <param name="analytics">Array of transaction details..</param>
+        /// <param name="paging">paging.</param>
+        public TransactionsResponse(AccountReference1 account = default(AccountReference1), AccountReport transactions = default(AccountReport), List<AnalyticsReportDetails> analytics = default(List<AnalyticsReportDetails>), Paging paging = default(Paging))
         {
             this.Account = account;
             this.Transactions = transactions;
+            this.Analytics = analytics;
+            this.Paging = paging;
         }
 
         /// <summary>
@@ -55,6 +59,19 @@ namespace Org.OpenAPITools.Model
         public AccountReport Transactions { get; set; }
 
         /// <summary>
+        /// Array of transaction details.
+        /// </summary>
+        /// <value>Array of transaction details.</value>
+        [DataMember(Name = "analytics", EmitDefaultValue = false)]
+        public List<AnalyticsReportDetails> Analytics { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Paging
+        /// </summary>
+        [DataMember(Name = "paging", EmitDefaultValue = false)]
+        public Paging Paging { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -64,6 +81,8 @@ namespace Org.OpenAPITools.Model
             sb.Append("class TransactionsResponse {\n");
             sb.Append("  Account: ").Append(Account).Append("\n");
             sb.Append("  Transactions: ").Append(Transactions).Append("\n");
+            sb.Append("  Analytics: ").Append(Analytics).Append("\n");
+            sb.Append("  Paging: ").Append(Paging).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -107,6 +126,17 @@ namespace Org.OpenAPITools.Model
                     this.Transactions == input.Transactions ||
                     (this.Transactions != null &&
                     this.Transactions.Equals(input.Transactions))
+                ) && 
+                (
+                    this.Analytics == input.Analytics ||
+                    this.Analytics != null &&
+                    input.Analytics != null &&
+                    this.Analytics.SequenceEqual(input.Analytics)
+                ) && 
+                (
+                    this.Paging == input.Paging ||
+                    (this.Paging != null &&
+                    this.Paging.Equals(input.Paging))
                 );
         }
 
@@ -123,6 +153,10 @@ namespace Org.OpenAPITools.Model
                     hashCode = hashCode * 59 + this.Account.GetHashCode();
                 if (this.Transactions != null)
                     hashCode = hashCode * 59 + this.Transactions.GetHashCode();
+                if (this.Analytics != null)
+                    hashCode = hashCode * 59 + this.Analytics.GetHashCode();
+                if (this.Paging != null)
+                    hashCode = hashCode * 59 + this.Paging.GetHashCode();
                 return hashCode;
             }
         }

@@ -102,6 +102,8 @@ paths:
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Psu-Authentication-Required
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
@@ -144,6 +146,8 @@ paths:
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Psu-Authentication-Required
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
@@ -158,6 +162,9 @@ paths:
         - $ref: '#/components/parameters/bookingStatus'
         - $ref: '#/components/parameters/deltaList'
         - $ref: '#/components/parameters/online'
+        - $ref: '#/components/parameters/analytics'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
       security:
         - BearerAuthOAuth: []
       responses:
@@ -184,6 +191,8 @@ paths:
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Psu-Authentication-Required
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
@@ -197,6 +206,8 @@ paths:
         - $ref: '#/components/parameters/entryReferenceFrom'
         - $ref: '#/components/parameters/bookingStatus'
         - $ref: '#/components/parameters/deltaList'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
       security:
         - BearerAuthOAuth: []
       responses:
@@ -222,7 +233,7 @@ paths:
             ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
         - $ref: >-
-            ./tpp_banking_api_commons.yml#/components/parameters/X-Pis-Psu-Authentication-Required
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Psu-Authentication-Required
         - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
         - $ref: >-
             ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
@@ -311,7 +322,7 @@ paths:
           $ref: '#/components/responses/202_UserAccepted'
         '401':
           $ref: '#/components/responses/401_Unauthorised'
-  '/v1/psu/ais/{authorization-id}/for-approval/login':
+  '/v1/psu/{authorization-id}/for-approval/login':
     post:
       tags:
         - Psu Authentication and consent approval
@@ -334,34 +345,11 @@ paths:
           $ref: '#/components/responses/202_UserAccepted'
         '401':
           $ref: '#/components/responses/401_Unauthorised'
-  '/v1/psu/pis/{authorization-id}/for-approval/login':
+  '/v1/psu/{authorization-id}/for-approval/anonymous':
     post:
       tags:
         - Psu Authentication and consent approval
-      operationId: loginForPaymentApproval
-      summary: Login user to open-banking to perform payment
-      description: TBD
-      requestBody:
-        description: User credentials object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PsuAuthBody'
-        required: true
-      parameters:
-        - $ref: '#/components/parameters/X-Request-ID'
-        - $ref: '#/components/parameters/authorization-id'
-        - $ref: '#/components/parameters/redirectCode'
-      responses:
-        '202':
-          $ref: '#/components/responses/202_UserAccepted'
-        '401':
-          $ref: '#/components/responses/401_Unauthorised'
-  '/v1/psu/pis/{authorization-id}/anonymous':
-    post:
-      tags:
-        - Psu Authentication and consent approval
-      operationId: loginForAnonymousPaymentApproval
+      operationId: loginForAnonymousApproval
       summary: Login user to open-banking to perform payment (anonymous to OPBA)
       description: TBD
       parameters:
@@ -536,7 +524,7 @@ paths:
           $ref: '#/components/responses/401_Unauthorized'
       security:
         - sessionCookie: []
-  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok':
+  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok/{fromAspspRedirectCode}':
     get:
       operationId: fromAspspOkUsingGET
       tags:
@@ -590,7 +578,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/auth-id'
         - $ref: '#/components/parameters/redirectState'
-        - $ref: '#/components/parameters/redirectCode1'
+        - $ref: '#/components/parameters/fromAspspRedirectCode'
         - $ref: '#/components/parameters/code'
       responses:
         '200':
@@ -599,7 +587,7 @@ paths:
           $ref: '#/components/responses/401_Unauthorized'
       security:
         - redirectCookie: []
-  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok':
+  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok/{fromAspspRedirectCode}':
     get:
       operationId: fromAspspNokUsingGET
       tags:
@@ -613,7 +601,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/auth-id'
         - $ref: '#/components/parameters/redirectState'
-        - $ref: '#/components/parameters/redirectCode1'
+        - $ref: '#/components/parameters/fromAspspRedirectCode'
       responses:
         '200':
           $ref: '#/components/responses/200_AuthorizeResponse'
@@ -1015,6 +1003,62 @@ components:
           $ref: '#/components/schemas/transactionList'
         pending:
           $ref: '#/components/schemas/transactionList'
+    analyticsReportDetails:
+      description: |
+        JSON based analytics report.
+        This account report contains transaction categorization result.
+      type: object
+      properties:
+        transactionId:
+          description: The id of transaction this analytics result refers to.
+          type: string
+        mainCategory:
+          description: Main category of the booking.
+          type: string
+        subCategory:
+          description: Sub category of the booking.
+          type: string
+        specification:
+          description: Specification of the booking.
+          type: string
+        otherAccount:
+          description: Related account.
+          type: string
+        logo:
+          description: Logo.
+          type: string
+        homepage:
+          description: Homepage.
+          type: string
+        hotline:
+          description: Hotline.
+          type: string
+        email:
+          description: Email.
+          type: string
+        custom:
+          description: Custom information about analyzed transaction.
+          type: object
+          additionalProperties:
+            type: string
+        usedRules:
+          description: Rules that were used to analyze.
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        nextBookingDate:
+          description: Classification next booking date.
+          type: string
+          format: date
+        cycle:
+          description: Classification cycle result.
+          type: string
+    analyticsReport:
+      description: Array of transaction details.
+      type: array
+      items:
+        $ref: '#/components/schemas/analyticsReportDetails'
     accountStatus:
       description: >
         Account status. The value is one of the following:
@@ -1082,6 +1126,40 @@ components:
           $ref: '#/components/schemas/hrefType'
         transactions:
           $ref: '#/components/schemas/hrefType'
+    paging:
+      description: |
+        Container for pagination information
+      type: object
+      required:
+        - page
+        - pageCount
+        - pageSize
+        - totalCount
+      properties:
+        page:
+          description: Current page number
+          type: integer
+          format: int32
+          minimum: 0
+          example: 0
+        pageSize:
+          description: Current page size (number of entries in this page)
+          type: integer
+          format: int32
+          minimum: 1
+          example: 20
+        pageCount:
+          description: Total number of pages
+          type: integer
+          format: int32
+          minimum: 0
+          example: 10
+        totalCount:
+          description: Total number of entries across all pages
+          type: integer
+          format: int64
+          minimum: 0
+          example: 200
     proprietaryBankTransactionCode:
       description: >
         Proprietary bank transaction code as used within a community or within
@@ -1521,6 +1599,10 @@ components:
           $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
         transactions:
           $ref: '#/components/schemas/accountReport'
+        analytics:
+          $ref: '#/components/schemas/analyticsReport'
+        paging:
+          $ref: '#/components/schemas/paging'
     ultimateCreditor:
       description: Ultimate Creditor.
       type: string
@@ -2582,15 +2664,15 @@ components:
       example: '2020-04-14T08:46:33.629Z'
       schema:
         type: string
-    X-Pis-Psu-Authentication-Required:
-      name: X-Pis-Psu-Authentication-Required
+    X-Psu-Authentication-Required:
+      name: X-Psu-Authentication-Required
       in: header
       description: >
-        If false, login form to OPBA will not be displayed as there might be
-        nothing to share for payments, so
+        If false, login form to OPBA will not be displayed, so that
+        authentication is not necessary.
 
-        that authentication is not necessary. If absent or true - login form for
-        payments will be displayed.
+        If absent or true - login form will be displayed, in order for OBG to
+        know the PSU.
       example: 'true'
       schema:
         type: boolean
@@ -2719,6 +2801,31 @@ components:
       schema:
         type: string
         format: date
+    page:
+      name: page
+      in: query
+      description: |
+        Result page that you want to retrieve.
+
+        Minimum value is 0.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+    pageSize:
+      name: pageSize
+      in: query
+      description: |
+        Maximum number of records per page.
+
+        Can be at most 500.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        maximum: 500
+        minimum: 1
     withBalance:
       name: withBalance
       in: query
@@ -2740,6 +2847,16 @@ components:
       schema:
         type: boolean
         default: 'true'
+    analytics:
+      name: analytics
+      in: query
+      required: false
+      description: |
+        Analyze transactions (bookings) for categorizations.
+      example: 'false'
+      schema:
+        type: boolean
+        default: 'false'
     deltaList:
       name: deltaList
       in: query
@@ -2799,6 +2916,7 @@ components:
     authorization-id:
       name: authorization-id
       in: path
+      required: true
       description: Authorization session ID to approve
       example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
       schema:
@@ -2834,7 +2952,17 @@ components:
       in: query
       description: >-
         Code used to retrieve a redirect session. This is generaly transported
-        as a query parameter
+        as a query parameter.
+      example: faadsf93nlas32wx
+      schema:
+        type: string
+    fromAspspRedirectCode:
+      name: fromAspspRedirectCode
+      in: path
+      description: >-
+        Code used to retrieve a redirect session. This is generaly transported
+        as a path parameter due to some banks limitiations (ING ASPSP) instead
+        of being transported as query parameter
       example: faadsf93nlas32wx
       schema:
         type: string

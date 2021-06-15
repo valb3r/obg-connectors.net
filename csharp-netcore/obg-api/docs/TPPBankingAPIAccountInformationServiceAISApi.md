@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 <a name="getaccounts"></a>
 # **GetAccounts**
-> AccountList GetAccounts (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, Guid? serviceSessionID = null, bool? withBalance = null, bool? online = null)
+> AccountList GetAccounts (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, bool? xPsuAuthenticationRequired = null, Guid? serviceSessionID = null, bool? withBalance = null, bool? online = null)
 
 Provides list of available accounts
 
@@ -46,6 +46,7 @@ namespace Example
             var xRequestSignature = xRequestSignature_example;  // string | A signature of the request by the TPP fintech.  (optional) 
             var fintechID = fintech_123;  // string | Unique ID that identifies fintech.  (optional) 
             var bankID = 1234-0XGJK;  // string | A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional) 
+            var xPsuAuthenticationRequired = true;  // bool? | If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional)  (default to true)
             var serviceSessionID = new Guid?(); // Guid? | Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional) 
             var withBalance = true;  // bool? | For list of accounts this query param defines to not only look for the accounts, but for the balances too.  (optional) 
             var online = false;  // bool? | Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional)  (default to true)
@@ -53,7 +54,7 @@ namespace Example
             try
             {
                 // Provides list of available accounts
-                AccountList result = apiInstance.GetAccounts(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, withBalance, online);
+                AccountList result = apiInstance.GetAccounts(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, withBalance, online);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -80,6 +81,7 @@ Name | Type | Description  | Notes
  **xRequestSignature** | **string**| A signature of the request by the TPP fintech.  | [optional] 
  **fintechID** | **string**| Unique ID that identifies fintech.  | [optional] 
  **bankID** | **string**| A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  | [optional] 
+ **xPsuAuthenticationRequired** | **bool?**| If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  | [optional] [default to true]
  **serviceSessionID** | [**Guid?**](Guid?.md)| Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  | [optional] 
  **withBalance** | **bool?**| For list of accounts this query param defines to not only look for the accounts, but for the balances too.  | [optional] 
  **online** | **bool?**| Makes possible to request actual data and update cache if cache is used by protocol implementation.  | [optional] [default to true]
@@ -111,7 +113,7 @@ Name | Type | Description  | Notes
 
 <a name="gettransactions"></a>
 # **GetTransactions**
-> TransactionsResponse GetTransactions (string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, Guid? serviceSessionID = null, DateTime? dateFrom = null, DateTime? dateTo = null, string entryReferenceFrom = null, string bookingStatus = null, bool? deltaList = null, bool? online = null)
+> TransactionsResponse GetTransactions (string accountId, string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, bool? xPsuAuthenticationRequired = null, Guid? serviceSessionID = null, DateTime? dateFrom = null, DateTime? dateTo = null, string entryReferenceFrom = null, string bookingStatus = null, bool? deltaList = null, bool? online = null, bool? analytics = null, int? page = null, int? pageSize = null)
 
 Provides list of transactions by given account
 
@@ -147,6 +149,7 @@ namespace Example
             var xRequestSignature = xRequestSignature_example;  // string | A signature of the request by the TPP fintech.  (optional) 
             var fintechID = fintech_123;  // string | Unique ID that identifies fintech.  (optional) 
             var bankID = 1234-0XGJK;  // string | A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional) 
+            var xPsuAuthenticationRequired = true;  // bool? | If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional)  (default to true)
             var serviceSessionID = new Guid?(); // Guid? | Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional) 
             var dateFrom = 2013-10-20;  // DateTime? | Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional) 
             var dateTo = 2013-10-20;  // DateTime? | End date (inclusive the data dateTo) of the transaction list, default is \"now\" if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional) 
@@ -154,11 +157,14 @@ namespace Example
             var bookingStatus = bookingStatus_example;  // string | Permitted codes are   * \"booked\",   * \"pending\" and   * \"both\" To support the \"pending\" and \"both\" feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \"booked\"  (optional) 
             var deltaList = true;  // bool? | This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional) 
             var online = false;  // bool? | Makes possible to request actual data and update cache if cache is used by protocol implementation.  (optional)  (default to true)
+            var analytics = false;  // bool? | Analyze transactions (bookings) for categorizations.  (optional)  (default to false)
+            var page = 56;  // int? | Result page that you want to retrieve.  Minimum value is 0.  (optional) 
+            var pageSize = 56;  // int? | Maximum number of records per page.  Can be at most 500.  (optional) 
 
             try
             {
                 // Provides list of transactions by given account
-                TransactionsResponse result = apiInstance.GetTransactions(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online);
+                TransactionsResponse result = apiInstance.GetTransactions(accountId, serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online, analytics, page, pageSize);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -186,6 +192,7 @@ Name | Type | Description  | Notes
  **xRequestSignature** | **string**| A signature of the request by the TPP fintech.  | [optional] 
  **fintechID** | **string**| Unique ID that identifies fintech.  | [optional] 
  **bankID** | **string**| A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  | [optional] 
+ **xPsuAuthenticationRequired** | **bool?**| If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  | [optional] [default to true]
  **serviceSessionID** | [**Guid?**](Guid?.md)| Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  | [optional] 
  **dateFrom** | **DateTime?**| Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  | [optional] 
  **dateTo** | **DateTime?**| End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  | [optional] 
@@ -193,6 +200,9 @@ Name | Type | Description  | Notes
  **bookingStatus** | **string**| Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  | [optional] 
  **deltaList** | **bool?**| This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  | [optional] 
  **online** | **bool?**| Makes possible to request actual data and update cache if cache is used by protocol implementation.  | [optional] [default to true]
+ **analytics** | **bool?**| Analyze transactions (bookings) for categorizations.  | [optional] [default to false]
+ **page** | **int?**| Result page that you want to retrieve.  Minimum value is 0.  | [optional] 
+ **pageSize** | **int?**| Maximum number of records per page.  Can be at most 500.  | [optional] 
 
 ### Return type
 
@@ -219,7 +229,7 @@ Name | Type | Description  | Notes
 
 <a name="gettransactionswithoutaccountid"></a>
 # **GetTransactionsWithoutAccountId**
-> TransactionsResponse GetTransactionsWithoutAccountId (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, Guid? serviceSessionID = null, DateTime? dateFrom = null, DateTime? dateTo = null, string entryReferenceFrom = null, string bookingStatus = null, bool? deltaList = null)
+> TransactionsResponse GetTransactionsWithoutAccountId (string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string xTimestampUTC = null, string xRequestSignature = null, string fintechID = null, string bankID = null, bool? xPsuAuthenticationRequired = null, Guid? serviceSessionID = null, DateTime? dateFrom = null, DateTime? dateTo = null, string entryReferenceFrom = null, string bookingStatus = null, bool? deltaList = null, int? page = null, int? pageSize = null)
 
 Provides consent for accounts and transactions
 
@@ -254,17 +264,20 @@ namespace Example
             var xRequestSignature = xRequestSignature_example;  // string | A signature of the request by the TPP fintech.  (optional) 
             var fintechID = fintech_123;  // string | Unique ID that identifies fintech.  (optional) 
             var bankID = 1234-0XGJK;  // string | A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional) 
+            var xPsuAuthenticationRequired = true;  // bool? | If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional)  (default to true)
             var serviceSessionID = new Guid?(); // Guid? | Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  (optional) 
             var dateFrom = 2013-10-20;  // DateTime? | Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional) 
             var dateTo = 2013-10-20;  // DateTime? | End date (inclusive the data dateTo) of the transaction list, default is \"now\" if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  (optional) 
             var entryReferenceFrom = entryReferenceFrom_example;  // string | This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \"dateFrom\" and \"dateTo\" might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  (optional) 
             var bookingStatus = bookingStatus_example;  // string | Permitted codes are   * \"booked\",   * \"pending\" and   * \"both\" To support the \"pending\" and \"both\" feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \"booked\"  (optional) 
             var deltaList = true;  // bool? | This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  (optional) 
+            var page = 56;  // int? | Result page that you want to retrieve.  Minimum value is 0.  (optional) 
+            var pageSize = 56;  // int? | Maximum number of records per page.  Can be at most 500.  (optional) 
 
             try
             {
                 // Provides consent for accounts and transactions
-                TransactionsResponse result = apiInstance.GetTransactionsWithoutAccountId(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList);
+                TransactionsResponse result = apiInstance.GetTransactionsWithoutAccountId(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, serviceSessionID, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, page, pageSize);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -291,12 +304,15 @@ Name | Type | Description  | Notes
  **xRequestSignature** | **string**| A signature of the request by the TPP fintech.  | [optional] 
  **fintechID** | **string**| Unique ID that identifies fintech.  | [optional] 
  **bankID** | **string**| A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  | [optional] 
+ **xPsuAuthenticationRequired** | **bool?**| If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  | [optional] [default to true]
  **serviceSessionID** | [**Guid?**](Guid?.md)| Unique ID that identifies service session. Can be used for batch processing to correlate input and output.  | [optional] 
  **dateFrom** | **DateTime?**| Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  | [optional] 
  **dateTo** | **DateTime?**| End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP.  | [optional] 
  **entryReferenceFrom** | **string**| This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider.  | [optional] 
  **bookingStatus** | **string**| Permitted codes are   * \&quot;booked\&quot;,   * \&quot;pending\&quot; and   * \&quot;both\&quot; To support the \&quot;pending\&quot; and \&quot;both\&quot; feature is optional for the ASPSP, Error code if not supported in the online banking frontend Default is \&quot;booked\&quot;  | [optional] 
  **deltaList** | **bool?**| This data attribute is indicating that the AISP is in favour to get all transactions after the last report access for this PSU on the addressed account. This is another implementation of a delta access-report.  This delta indicator might be rejected by the ASPSP if this function is not supported.  Optional if supported by API provider  | [optional] 
+ **page** | **int?**| Result page that you want to retrieve.  Minimum value is 0.  | [optional] 
+ **pageSize** | **int?**| Maximum number of records per page.  Can be at most 500.  | [optional] 
 
 ### Return type
 

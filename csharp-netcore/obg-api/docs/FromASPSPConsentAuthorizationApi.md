@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**FromAspspNokUsingGET**](FromASPSPConsentAuthorizationApi.md#fromaspspnokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/nok | Redirecting back from ASPSP to TPP after a failed consent authorization.
-[**FromAspspOkUsingGET**](FromASPSPConsentAuthorizationApi.md#fromaspspokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/ok | Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
+[**FromAspspNokUsingGET**](FromASPSPConsentAuthorizationApi.md#fromaspspnokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/nok/{fromAspspRedirectCode} | Redirecting back from ASPSP to TPP after a failed consent authorization.
+[**FromAspspOkUsingGET**](FromASPSPConsentAuthorizationApi.md#fromaspspokusingget) | **GET** /v1/consent/{auth-id}/fromAspsp/{redirectState}/ok/{fromAspspRedirectCode} | Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
 
 
 <a name="fromaspspnokusingget"></a>
 # **FromAspspNokUsingGET**
-> ConsentAuth FromAspspNokUsingGET (string authId, string redirectState, string redirectCode = null)
+> ConsentAuth FromAspspNokUsingGET (string authId, string redirectState, string fromAspspRedirectCode)
 
 Redirecting back from ASPSP to TPP after a failed consent authorization.
 
@@ -35,12 +35,12 @@ namespace Example
             var apiInstance = new FromASPSPConsentAuthorizationApi(config);
             var authId = abc123;  // string | Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. 
             var redirectState = faadsf93nlas32wx;  // string | XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. 
-            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional) 
+            var fromAspspRedirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter
 
             try
             {
                 // Redirecting back from ASPSP to TPP after a failed consent authorization.
-                ConsentAuth result = apiInstance.FromAspspNokUsingGET(authId, redirectState, redirectCode);
+                ConsentAuth result = apiInstance.FromAspspNokUsingGET(authId, redirectState, fromAspspRedirectCode);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -60,7 +60,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authId** | **string**| Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.  | 
  **redirectState** | **string**| XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter.  | 
- **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter | [optional] 
+ **fromAspspRedirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter | 
 
 ### Return type
 
@@ -86,7 +86,7 @@ No authorization required
 
 <a name="fromaspspokusingget"></a>
 # **FromAspspOkUsingGET**
-> ConsentAuth FromAspspOkUsingGET (string authId, string redirectState, string redirectCode = null, string code = null)
+> ConsentAuth FromAspspOkUsingGET (string authId, string redirectState, string fromAspspRedirectCode, string code = null)
 
 Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
 
@@ -111,13 +111,13 @@ namespace Example
             var apiInstance = new FromASPSPConsentAuthorizationApi(config);
             var authId = abc123;  // string | Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. 
             var redirectState = faadsf93nlas32wx;  // string | XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. 
-            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional) 
+            var fromAspspRedirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter
             var code = faadsf93nlas32wx;  // string | Oauth2 code to exchange for token. (optional) 
 
             try
             {
                 // Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
-                ConsentAuth result = apiInstance.FromAspspOkUsingGET(authId, redirectState, redirectCode, code);
+                ConsentAuth result = apiInstance.FromAspspOkUsingGET(authId, redirectState, fromAspspRedirectCode, code);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -137,7 +137,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authId** | **string**| Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.  | 
  **redirectState** | **string**| XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter.  | 
- **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter | [optional] 
+ **fromAspspRedirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter | 
  **code** | **string**| Oauth2 code to exchange for token. | [optional] 
 
 ### Return type

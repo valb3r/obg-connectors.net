@@ -37,7 +37,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authorizationId">Authorization session ID to approve</param>
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <returns>LoginResponse</returns>
-        LoginResponse LoginForAnonymousPaymentApproval(Guid xRequestID, Guid authorizationId, string redirectCode);
+        LoginResponse LoginForAnonymousApproval(Guid xRequestID, Guid authorizationId, string redirectCode);
 
         /// <summary>
         /// Login user to open-banking to perform payment (anonymous to OPBA)
@@ -50,7 +50,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="authorizationId">Authorization session ID to approve</param>
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <returns>ApiResponse of LoginResponse</returns>
-        ApiResponse<LoginResponse> LoginForAnonymousPaymentApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode);
+        ApiResponse<LoginResponse> LoginForAnonymousApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode);
         /// <summary>
         /// Login user to open-banking
         /// </summary>
@@ -78,33 +78,6 @@ namespace Org.OpenAPITools.Api
         /// <param name="psuAuthBody">User credentials object</param>
         /// <returns>ApiResponse of LoginResponse</returns>
         ApiResponse<LoginResponse> LoginForApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody);
-        /// <summary>
-        /// Login user to open-banking to perform payment
-        /// </summary>
-        /// <remarks>
-        /// TBD
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <returns>LoginResponse</returns>
-        LoginResponse LoginForPaymentApproval(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody);
-
-        /// <summary>
-        /// Login user to open-banking to perform payment
-        /// </summary>
-        /// <remarks>
-        /// TBD
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <returns>ApiResponse of LoginResponse</returns>
-        ApiResponse<LoginResponse> LoginForPaymentApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody);
         #endregion Synchronous Operations
     }
 
@@ -126,7 +99,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of LoginResponse</returns>
-        System.Threading.Tasks.Task<LoginResponse> LoginForAnonymousPaymentApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<LoginResponse> LoginForAnonymousApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Login user to open-banking to perform payment (anonymous to OPBA)
@@ -140,7 +113,7 @@ namespace Org.OpenAPITools.Api
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (LoginResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<LoginResponse>> LoginForAnonymousPaymentApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<LoginResponse>> LoginForAnonymousApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Login user to open-banking
         /// </summary>
@@ -170,35 +143,6 @@ namespace Org.OpenAPITools.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (LoginResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<LoginResponse>> LoginForApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Login user to open-banking to perform payment
-        /// </summary>
-        /// <remarks>
-        /// TBD
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of LoginResponse</returns>
-        System.Threading.Tasks.Task<LoginResponse> LoginForPaymentApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Login user to open-banking to perform payment
-        /// </summary>
-        /// <remarks>
-        /// TBD
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (LoginResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<LoginResponse>> LoginForPaymentApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -327,9 +271,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="authorizationId">Authorization session ID to approve</param>
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <returns>LoginResponse</returns>
-        public LoginResponse LoginForAnonymousPaymentApproval(Guid xRequestID, Guid authorizationId, string redirectCode)
+        public LoginResponse LoginForAnonymousApproval(Guid xRequestID, Guid authorizationId, string redirectCode)
         {
-            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = LoginForAnonymousPaymentApprovalWithHttpInfo(xRequestID, authorizationId, redirectCode);
+            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = LoginForAnonymousApprovalWithHttpInfo(xRequestID, authorizationId, redirectCode);
             return localVarResponse.Data;
         }
 
@@ -341,11 +285,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="authorizationId">Authorization session ID to approve</param>
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <returns>ApiResponse of LoginResponse</returns>
-        public Org.OpenAPITools.Client.ApiResponse<LoginResponse> LoginForAnonymousPaymentApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode)
+        public Org.OpenAPITools.Client.ApiResponse<LoginResponse> LoginForAnonymousApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode)
         {
             // verify the required parameter 'redirectCode' is set
             if (redirectCode == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForAnonymousPaymentApproval");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForAnonymousApproval");
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -369,11 +313,11 @@ namespace Org.OpenAPITools.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<LoginResponse>("/v1/psu/pis/{authorization-id}/anonymous", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<LoginResponse>("/v1/psu/{authorization-id}/for-approval/anonymous", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("LoginForAnonymousPaymentApproval", localVarResponse);
+                Exception _exception = this.ExceptionFactory("LoginForAnonymousApproval", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -389,9 +333,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of LoginResponse</returns>
-        public async System.Threading.Tasks.Task<LoginResponse> LoginForAnonymousPaymentApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<LoginResponse> LoginForAnonymousApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = await LoginForAnonymousPaymentApprovalWithHttpInfoAsync(xRequestID, authorizationId, redirectCode, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = await LoginForAnonymousApprovalWithHttpInfoAsync(xRequestID, authorizationId, redirectCode, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -404,11 +348,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (LoginResponse)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<LoginResponse>> LoginForAnonymousPaymentApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<LoginResponse>> LoginForAnonymousApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'redirectCode' is set
             if (redirectCode == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForAnonymousPaymentApproval");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForAnonymousApproval");
 
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -435,11 +379,11 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<LoginResponse>("/v1/psu/pis/{authorization-id}/anonymous", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<LoginResponse>("/v1/psu/{authorization-id}/for-approval/anonymous", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("LoginForAnonymousPaymentApproval", localVarResponse);
+                Exception _exception = this.ExceptionFactory("LoginForAnonymousApproval", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -504,7 +448,7 @@ namespace Org.OpenAPITools.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<LoginResponse>("/v1/psu/ais/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<LoginResponse>("/v1/psu/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -578,154 +522,11 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<LoginResponse>("/v1/psu/ais/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<LoginResponse>("/v1/psu/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("LoginForApproval", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Login user to open-banking to perform payment TBD
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <returns>LoginResponse</returns>
-        public LoginResponse LoginForPaymentApproval(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody)
-        {
-            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = LoginForPaymentApprovalWithHttpInfo(xRequestID, authorizationId, redirectCode, psuAuthBody);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Login user to open-banking to perform payment TBD
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <returns>ApiResponse of LoginResponse</returns>
-        public Org.OpenAPITools.Client.ApiResponse<LoginResponse> LoginForPaymentApprovalWithHttpInfo(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody)
-        {
-            // verify the required parameter 'redirectCode' is set
-            if (redirectCode == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForPaymentApproval");
-
-            // verify the required parameter 'psuAuthBody' is set
-            if (psuAuthBody == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'psuAuthBody' when calling PsuAuthenticationAndConsentApprovalApi->LoginForPaymentApproval");
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("authorization-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authorizationId)); // path parameter
-            localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            localVarRequestOptions.HeaderParameters.Add("X-Request-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xRequestID)); // header parameter
-            localVarRequestOptions.Data = psuAuthBody;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Post<LoginResponse>("/v1/psu/pis/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("LoginForPaymentApproval", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Login user to open-banking to perform payment TBD
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of LoginResponse</returns>
-        public async System.Threading.Tasks.Task<LoginResponse> LoginForPaymentApprovalAsync(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Org.OpenAPITools.Client.ApiResponse<LoginResponse> localVarResponse = await LoginForPaymentApprovalWithHttpInfoAsync(xRequestID, authorizationId, redirectCode, psuAuthBody, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Login user to open-banking to perform payment TBD
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="xRequestID">Unique ID that identifies this request through common workflow. Shall be contained in HTTP Response as well. </param>
-        /// <param name="authorizationId">Authorization session ID to approve</param>
-        /// <param name="redirectCode">Redirect code that acts as a password protecting FinTech requested consent specification</param>
-        /// <param name="psuAuthBody">User credentials object</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (LoginResponse)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<LoginResponse>> LoginForPaymentApprovalWithHttpInfoAsync(Guid xRequestID, Guid authorizationId, string redirectCode, PsuAuthBody psuAuthBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'redirectCode' is set
-            if (redirectCode == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectCode' when calling PsuAuthenticationAndConsentApprovalApi->LoginForPaymentApproval");
-
-            // verify the required parameter 'psuAuthBody' is set
-            if (psuAuthBody == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'psuAuthBody' when calling PsuAuthenticationAndConsentApprovalApi->LoginForPaymentApproval");
-
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.PathParameters.Add("authorization-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authorizationId)); // path parameter
-            localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            localVarRequestOptions.HeaderParameters.Add("X-Request-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xRequestID)); // header parameter
-            localVarRequestOptions.Data = psuAuthBody;
-
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PostAsync<LoginResponse>("/v1/psu/pis/{authorization-id}/for-approval/login", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("LoginForPaymentApproval", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

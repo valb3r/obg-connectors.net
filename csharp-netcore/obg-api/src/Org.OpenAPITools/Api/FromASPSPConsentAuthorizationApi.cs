@@ -35,9 +35,9 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <returns>ConsentAuth</returns>
-        ConsentAuth FromAspspNokUsingGET(string authId, string redirectState, string redirectCode = default(string));
+        ConsentAuth FromAspspNokUsingGET(string authId, string redirectState, string fromAspspRedirectCode);
 
         /// <summary>
         /// Redirecting back from ASPSP to TPP after a failed consent authorization.
@@ -48,9 +48,9 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
-        ApiResponse<ConsentAuth> FromAspspNokUsingGETWithHttpInfo(string authId, string redirectState, string redirectCode = default(string));
+        ApiResponse<ConsentAuth> FromAspspNokUsingGETWithHttpInfo(string authId, string redirectState, string fromAspspRedirectCode);
         /// <summary>
         /// Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
         /// </summary>
@@ -60,10 +60,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <returns>ConsentAuth</returns>
-        ConsentAuth FromAspspOkUsingGET(string authId, string redirectState, string redirectCode = default(string), string code = default(string));
+        ConsentAuth FromAspspOkUsingGET(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string));
 
         /// <summary>
         /// Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
@@ -74,10 +74,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
-        ApiResponse<ConsentAuth> FromAspspOkUsingGETWithHttpInfo(string authId, string redirectState, string redirectCode = default(string), string code = default(string));
+        ApiResponse<ConsentAuth> FromAspspOkUsingGETWithHttpInfo(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string));
         #endregion Synchronous Operations
     }
 
@@ -96,10 +96,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
-        System.Threading.Tasks.Task<ConsentAuth> FromAspspNokUsingGETAsync(string authId, string redirectState, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ConsentAuth> FromAspspNokUsingGETAsync(string authId, string redirectState, string fromAspspRedirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Redirecting back from ASPSP to TPP after a failed consent authorization.
@@ -110,10 +110,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ConsentAuth>> FromAspspNokUsingGETWithHttpInfoAsync(string authId, string redirectState, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ConsentAuth>> FromAspspNokUsingGETWithHttpInfoAsync(string authId, string redirectState, string fromAspspRedirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
         /// </summary>
@@ -123,11 +123,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
-        System.Threading.Tasks.Task<ConsentAuth> FromAspspOkUsingGETAsync(string authId, string redirectState, string redirectCode = default(string), string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ConsentAuth> FromAspspOkUsingGETAsync(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Redirecting back from ASPSP to ConsentAuthorisationApi after a successful consent authorization.
@@ -138,11 +138,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ConsentAuth>> FromAspspOkUsingGETWithHttpInfoAsync(string authId, string redirectState, string redirectCode = default(string), string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ConsentAuth>> FromAspspOkUsingGETWithHttpInfoAsync(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -269,11 +269,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <returns>ConsentAuth</returns>
-        public ConsentAuth FromAspspNokUsingGET(string authId, string redirectState, string redirectCode = default(string))
+        public ConsentAuth FromAspspNokUsingGET(string authId, string redirectState, string fromAspspRedirectCode)
         {
-            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = FromAspspNokUsingGETWithHttpInfo(authId, redirectState, redirectCode);
+            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = FromAspspNokUsingGETWithHttpInfo(authId, redirectState, fromAspspRedirectCode);
             return localVarResponse.Data;
         }
 
@@ -283,9 +283,9 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
-        public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> FromAspspNokUsingGETWithHttpInfo(string authId, string redirectState, string redirectCode = default(string))
+        public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> FromAspspNokUsingGETWithHttpInfo(string authId, string redirectState, string fromAspspRedirectCode)
         {
             // verify the required parameter 'authId' is set
             if (authId == null)
@@ -294,6 +294,10 @@ namespace Org.OpenAPITools.Api
             // verify the required parameter 'redirectState' is set
             if (redirectState == null)
                 throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectState' when calling FromASPSPConsentAuthorizationApi->FromAspspNokUsingGET");
+
+            // verify the required parameter 'fromAspspRedirectCode' is set
+            if (fromAspspRedirectCode == null)
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'fromAspspRedirectCode' when calling FromASPSPConsentAuthorizationApi->FromAspspNokUsingGET");
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -313,14 +317,11 @@ namespace Org.OpenAPITools.Api
 
             localVarRequestOptions.PathParameters.Add("auth-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authId)); // path parameter
             localVarRequestOptions.PathParameters.Add("redirectState", Org.OpenAPITools.Client.ClientUtils.ParameterToString(redirectState)); // path parameter
-            if (redirectCode != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            }
+            localVarRequestOptions.PathParameters.Add("fromAspspRedirectCode", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fromAspspRedirectCode)); // path parameter
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok/{fromAspspRedirectCode}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -337,12 +338,12 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
-        public async System.Threading.Tasks.Task<ConsentAuth> FromAspspNokUsingGETAsync(string authId, string redirectState, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ConsentAuth> FromAspspNokUsingGETAsync(string authId, string redirectState, string fromAspspRedirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = await FromAspspNokUsingGETWithHttpInfoAsync(authId, redirectState, redirectCode, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = await FromAspspNokUsingGETWithHttpInfoAsync(authId, redirectState, fromAspspRedirectCode, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -352,10 +353,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ConsentAuth>> FromAspspNokUsingGETWithHttpInfoAsync(string authId, string redirectState, string redirectCode = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ConsentAuth>> FromAspspNokUsingGETWithHttpInfoAsync(string authId, string redirectState, string fromAspspRedirectCode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'authId' is set
             if (authId == null)
@@ -364,6 +365,10 @@ namespace Org.OpenAPITools.Api
             // verify the required parameter 'redirectState' is set
             if (redirectState == null)
                 throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectState' when calling FromASPSPConsentAuthorizationApi->FromAspspNokUsingGET");
+
+            // verify the required parameter 'fromAspspRedirectCode' is set
+            if (fromAspspRedirectCode == null)
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'fromAspspRedirectCode' when calling FromASPSPConsentAuthorizationApi->FromAspspNokUsingGET");
 
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -385,15 +390,12 @@ namespace Org.OpenAPITools.Api
 
             localVarRequestOptions.PathParameters.Add("auth-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authId)); // path parameter
             localVarRequestOptions.PathParameters.Add("redirectState", Org.OpenAPITools.Client.ClientUtils.ParameterToString(redirectState)); // path parameter
-            if (redirectCode != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            }
+            localVarRequestOptions.PathParameters.Add("fromAspspRedirectCode", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fromAspspRedirectCode)); // path parameter
 
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok/{fromAspspRedirectCode}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -410,12 +412,12 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <returns>ConsentAuth</returns>
-        public ConsentAuth FromAspspOkUsingGET(string authId, string redirectState, string redirectCode = default(string), string code = default(string))
+        public ConsentAuth FromAspspOkUsingGET(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string))
         {
-            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = FromAspspOkUsingGETWithHttpInfo(authId, redirectState, redirectCode, code);
+            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = FromAspspOkUsingGETWithHttpInfo(authId, redirectState, fromAspspRedirectCode, code);
             return localVarResponse.Data;
         }
 
@@ -425,10 +427,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <returns>ApiResponse of ConsentAuth</returns>
-        public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> FromAspspOkUsingGETWithHttpInfo(string authId, string redirectState, string redirectCode = default(string), string code = default(string))
+        public Org.OpenAPITools.Client.ApiResponse<ConsentAuth> FromAspspOkUsingGETWithHttpInfo(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string))
         {
             // verify the required parameter 'authId' is set
             if (authId == null)
@@ -438,6 +440,10 @@ namespace Org.OpenAPITools.Api
             if (redirectState == null)
                 throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectState' when calling FromASPSPConsentAuthorizationApi->FromAspspOkUsingGET");
 
+            // verify the required parameter 'fromAspspRedirectCode' is set
+            if (fromAspspRedirectCode == null)
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'fromAspspRedirectCode' when calling FromASPSPConsentAuthorizationApi->FromAspspOkUsingGET");
+
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
             String[] _contentTypes = new String[] {
@@ -456,10 +462,7 @@ namespace Org.OpenAPITools.Api
 
             localVarRequestOptions.PathParameters.Add("auth-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authId)); // path parameter
             localVarRequestOptions.PathParameters.Add("redirectState", Org.OpenAPITools.Client.ClientUtils.ParameterToString(redirectState)); // path parameter
-            if (redirectCode != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            }
+            localVarRequestOptions.PathParameters.Add("fromAspspRedirectCode", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fromAspspRedirectCode)); // path parameter
             if (code != null)
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "code", code));
@@ -467,7 +470,7 @@ namespace Org.OpenAPITools.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok/{fromAspspRedirectCode}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -484,13 +487,13 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ConsentAuth</returns>
-        public async System.Threading.Tasks.Task<ConsentAuth> FromAspspOkUsingGETAsync(string authId, string redirectState, string redirectCode = default(string), string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ConsentAuth> FromAspspOkUsingGETAsync(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = await FromAspspOkUsingGETWithHttpInfoAsync(authId, redirectState, redirectCode, code, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<ConsentAuth> localVarResponse = await FromAspspOkUsingGETWithHttpInfoAsync(authId, redirectState, fromAspspRedirectCode, code, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -500,11 +503,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="authId">Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. </param>
         /// <param name="redirectState">XSRF parameter used to validate an RedirectCookie. This is generaly transported as a path parameter. </param>
-        /// <param name="redirectCode">Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional)</param>
+        /// <param name="fromAspspRedirectCode">Code used to retrieve a redirect session. This is generaly transported as a path parameter due to some banks limitiations (ING ASPSP) instead of being transported as query parameter</param>
         /// <param name="code">Oauth2 code to exchange for token. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ConsentAuth)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ConsentAuth>> FromAspspOkUsingGETWithHttpInfoAsync(string authId, string redirectState, string redirectCode = default(string), string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<ConsentAuth>> FromAspspOkUsingGETWithHttpInfoAsync(string authId, string redirectState, string fromAspspRedirectCode, string code = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'authId' is set
             if (authId == null)
@@ -513,6 +516,10 @@ namespace Org.OpenAPITools.Api
             // verify the required parameter 'redirectState' is set
             if (redirectState == null)
                 throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'redirectState' when calling FromASPSPConsentAuthorizationApi->FromAspspOkUsingGET");
+
+            // verify the required parameter 'fromAspspRedirectCode' is set
+            if (fromAspspRedirectCode == null)
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'fromAspspRedirectCode' when calling FromASPSPConsentAuthorizationApi->FromAspspOkUsingGET");
 
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -534,10 +541,7 @@ namespace Org.OpenAPITools.Api
 
             localVarRequestOptions.PathParameters.Add("auth-id", Org.OpenAPITools.Client.ClientUtils.ParameterToString(authId)); // path parameter
             localVarRequestOptions.PathParameters.Add("redirectState", Org.OpenAPITools.Client.ClientUtils.ParameterToString(redirectState)); // path parameter
-            if (redirectCode != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "redirectCode", redirectCode));
-            }
+            localVarRequestOptions.PathParameters.Add("fromAspspRedirectCode", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fromAspspRedirectCode)); // path parameter
             if (code != null)
             {
                 localVarRequestOptions.QueryParameters.Add(Org.OpenAPITools.Client.ClientUtils.ParameterToMultiMap("", "code", code));
@@ -546,7 +550,7 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ConsentAuth>("/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok/{fromAspspRedirectCode}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

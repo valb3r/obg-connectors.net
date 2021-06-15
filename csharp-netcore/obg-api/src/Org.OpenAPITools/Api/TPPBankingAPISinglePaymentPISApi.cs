@@ -44,9 +44,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <returns>PaymentInitiationResponse</returns>
-        PaymentInitiationResponse InitiatePayment(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?));
+        PaymentInitiationResponse InitiatePayment(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?));
 
         /// <summary>
         /// Payment initiation request
@@ -66,9 +66,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <returns>ApiResponse of PaymentInitiationResponse</returns>
-        ApiResponse<PaymentInitiationResponse> InitiatePaymentWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?));
+        ApiResponse<PaymentInitiationResponse> InitiatePaymentWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?));
         #endregion Synchronous Operations
     }
 
@@ -96,10 +96,10 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaymentInitiationResponse</returns>
-        System.Threading.Tasks.Task<PaymentInitiationResponse> InitiatePaymentAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PaymentInitiationResponse> InitiatePaymentAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
         /// Payment initiation request
@@ -119,10 +119,10 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaymentInitiationResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaymentInitiationResponse>> InitiatePaymentWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PaymentInitiationResponse>> InitiatePaymentWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -258,11 +258,11 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <returns>PaymentInitiationResponse</returns>
-        public PaymentInitiationResponse InitiatePayment(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?))
+        public PaymentInitiationResponse InitiatePayment(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?))
         {
-            Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> localVarResponse = InitiatePaymentWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPisPsuAuthenticationRequired);
+            Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> localVarResponse = InitiatePaymentWithHttpInfo(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired);
             return localVarResponse.Data;
         }
 
@@ -281,9 +281,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <returns>ApiResponse of PaymentInitiationResponse</returns>
-        public Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> InitiatePaymentWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?))
+        public Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> InitiatePaymentWithHttpInfo(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -344,9 +344,9 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
             }
-            if (xPisPsuAuthenticationRequired != null)
+            if (xPsuAuthenticationRequired != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("X-Pis-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPisPsuAuthenticationRequired)); // header parameter
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter
@@ -388,12 +388,12 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of PaymentInitiationResponse</returns>
-        public async System.Threading.Tasks.Task<PaymentInitiationResponse> InitiatePaymentAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<PaymentInitiationResponse> InitiatePaymentAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> localVarResponse = await InitiatePaymentWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPisPsuAuthenticationRequired, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse> localVarResponse = await InitiatePaymentWithHttpInfoAsync(serviceSessionPassword, fintechUserID, fintechRedirectURLOK, fintechRedirectURLNOK, xRequestID, paymentProduct, body, xTimestampUTC, xRequestSignature, fintechID, bankID, xPsuAuthenticationRequired, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -412,10 +412,10 @@ namespace Org.OpenAPITools.Api
         /// <param name="xRequestSignature">A signature of the request by the TPP fintech.  (optional)</param>
         /// <param name="fintechID">Unique ID that identifies fintech.  (optional)</param>
         /// <param name="bankID">A bank identifier, provided by TPP Bank Search API. To be provided by FinTech only if PsuConsentSession is missing.  (optional)</param>
-        /// <param name="xPisPsuAuthenticationRequired">If false, login form to OPBA will not be displayed as there might be nothing to share for payments, so that authentication is not necessary. If absent or true - login form for payments will be displayed.  (optional, default to true)</param>
+        /// <param name="xPsuAuthenticationRequired">If false, login form to OPBA will not be displayed, so that authentication is not necessary. If absent or true - login form will be displayed, in order for OBG to know the PSU.  (optional, default to true)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (PaymentInitiationResponse)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse>> InitiatePaymentWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPisPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<PaymentInitiationResponse>> InitiatePaymentWithHttpInfoAsync(string serviceSessionPassword, string fintechUserID, string fintechRedirectURLOK, string fintechRedirectURLNOK, Guid xRequestID, string paymentProduct, PaymentInitiation body, string xTimestampUTC = default(string), string xRequestSignature = default(string), string fintechID = default(string), string bankID = default(string), bool? xPsuAuthenticationRequired = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'serviceSessionPassword' is set
             if (serviceSessionPassword == null)
@@ -478,9 +478,9 @@ namespace Org.OpenAPITools.Api
             {
                 localVarRequestOptions.HeaderParameters.Add("Bank-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(bankID)); // header parameter
             }
-            if (xPisPsuAuthenticationRequired != null)
+            if (xPsuAuthenticationRequired != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("X-Pis-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPisPsuAuthenticationRequired)); // header parameter
+                localVarRequestOptions.HeaderParameters.Add("X-Psu-Authentication-Required", Org.OpenAPITools.Client.ClientUtils.ParameterToString(xPsuAuthenticationRequired)); // header parameter
             }
             localVarRequestOptions.HeaderParameters.Add("Fintech-User-ID", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechUserID)); // header parameter
             localVarRequestOptions.HeaderParameters.Add("Fintech-Redirect-URL-OK", Org.OpenAPITools.Client.ClientUtils.ParameterToString(fintechRedirectURLOK)); // header parameter

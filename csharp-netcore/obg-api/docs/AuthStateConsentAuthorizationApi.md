@@ -33,7 +33,7 @@ namespace Example
             config.BasePath = "http://localhost";
             var apiInstance = new AuthStateConsentAuthorizationApi(config);
             var authId = abc123;  // string | Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process. 
-            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter (optional) 
+            var redirectCode = faadsf93nlas32wx;  // string | Code used to retrieve a redirect session. This is generaly transported as a query parameter. (optional) 
 
             try
             {
@@ -57,7 +57,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authId** | **string**| Used to distinguish between different consent authorization processes started by the same PSU. Also included in the corresponding cookie path to limit visibility of the consent cookie to the corresponding consent process.  | 
- **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter | [optional] 
+ **redirectCode** | **string**| Code used to retrieve a redirect session. This is generaly transported as a query parameter. | [optional] 
 
 ### Return type
 
