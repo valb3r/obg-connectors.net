@@ -1,0 +1,3047 @@
+openapi: 3.0.3
+info:
+  title: An include file to define common attributes
+  version: 1.0.0
+externalDocs:
+  url: 'https://adorsys.github.com/open-banking-gateway'
+tags:
+  - name: Consent Authorization
+    description: >
+      Entry point for processing a consent request redirected by the
+      TppBankingApi
+
+      over the FinTechApi to this ConsentAuthorisationApi.
+paths:
+  /v1/banking/search/bank-search:
+    get:
+      tags:
+        - TppBankSearch
+      operationId: bankSearchGET
+      summary: Issues an incremental bank search request to the TppBankSearchApi.
+      description: Issues an incremental bank search request to the TppBankSearchApi.
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - name: keyword
+          in: query
+          description: The bank search input string
+          required: true
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: The index of the first result
+          required: false
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: The max number of entries to return with the response.
+          required: false
+          schema:
+            type: integer
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200_BankSearchResult'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+  /v1/banking/search/bank-profile:
+    get:
+      tags:
+        - TppBankSearch
+      summary: Request the profile of the bank identified with id (bankId).
+      description: Request the profile of the bank identified with id (bankId).
+      operationId: bankProfileGET
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - name: bankId
+          in: query
+          description: Identifier of the bank to be loaded.
+          required: true
+          schema:
+            type: string
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200_BankProfile'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+  /v1/banking/ais/accounts:
+    get:
+      operationId: getAccounts
+      summary: Provides list of available accounts
+      tags:
+        - TPP Banking API Account information service (AIS)
+      description: >-
+        Read the identifiers of the available payment accounts.
+
+        It is assumed that a consent of the PSU to this access is already given
+        and stored on the TPP system. The addressed list of accounts depends
+        then on the PSU and Consent information, stored respectively the OAuth2
+        access token.
+
+        Returns all identifiers of the accounts, to which an account access has
+        been granted to by the PSU. In addition, relevant information about the
+        accounts and hyperlinks to corresponding account information resources
+        are provided if a related consent has been already granted.
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/withBalance'
+        - $ref: '#/components/parameters/online'
+      security:
+        - BearerAuthOAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AccountList'
+        '202':
+          $ref: '#/components/responses/202_AUTHORIZATION_REQUIRED'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+        '410':
+          $ref: '#/components/responses/ErrorShownInXErrorCodeHeaderField'
+        '429':
+          $ref: '#/components/responses/ErrorShownInXErrorCodeHeaderField'
+  '/v1/banking/ais/accounts/{account-id}/transactions':
+    get:
+      operationId: getTransactions
+      summary: Provides list of transactions by given account
+      tags:
+        - TPP Banking API Account information service (AIS)
+      description: >-
+        returns list of transactions for specified account resource ID in case
+        Service-Session-ID is provided and saved consent on tpp by it found.
+        Otherwise initiates creation of new consent
+      parameters:
+        - $ref: '#/components/parameters/account-id'
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/dateFrom'
+        - $ref: '#/components/parameters/dateTo'
+        - $ref: '#/components/parameters/entryReferenceFrom'
+        - $ref: '#/components/parameters/bookingStatus'
+        - $ref: '#/components/parameters/deltaList'
+        - $ref: '#/components/parameters/online'
+      security:
+        - BearerAuthOAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AccountsTransactions'
+        '202':
+          $ref: '#/components/responses/202_AUTHORIZATION_REQUIRED'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+  /v1/banking/ais/transactions:
+    get:
+      operationId: getTransactions without account id
+      summary: Provides consent for accounts and transactions
+      tags:
+        - TPP Banking API Account information service (AIS)
+      description: >-
+        This method initiates creation of consent which then can be used for
+        getting either accounts or transactions
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/dateFrom'
+        - $ref: '#/components/parameters/dateTo'
+        - $ref: '#/components/parameters/entryReferenceFrom'
+        - $ref: '#/components/parameters/bookingStatus'
+        - $ref: '#/components/parameters/deltaList'
+      security:
+        - BearerAuthOAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AccountsTransactions'
+        '202':
+          $ref: '#/components/responses/202_AUTHORIZATION_REQUIRED'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+  '/v1/banking/pis/payments/{payment-product}':
+    post:
+      summary: Payment initiation request
+      description: This method is used to initiate a payment at the ASPSP.
+      operationId: initiatePayment
+      tags:
+        - TPP Banking API Single Payment (PIS)
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Pis-Psu-Authentication-Required
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-OK
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/PaymentProduct'
+      requestBody:
+        $ref: '#/components/requestBodies/PaymentInitiation'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_PaymentInitiationResponse'
+      security:
+        - {}
+        - BearerAuthOAuth: []
+      x-codegen-request-body-name: body
+    get:
+      summary: Get payment information
+      description: Returns the content of a payment object
+      operationId: getPaymentInformation
+      tags:
+        - TPP Banking API Payment Status (PIS)
+      security:
+        - {}
+        - BearerAuthOAuth: []
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/PaymentProduct'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_PaymentInformationResponse'
+  '/v1/banking/pis/payments/{payment-product}/status':
+    get:
+      summary: Payment initiation status request
+      description: Check the transaction status of a payment initiation.
+      operationId: getPaymentStatus
+      tags:
+        - TPP Banking API Payment Status (PIS)
+      security:
+        - {}
+        - BearerAuthOAuth: []
+      parameters:
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Bank-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-User-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: '#/components/parameters/PaymentProduct'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_PaymentStatusResponse'
+  /v1/psu/login:
+    post:
+      tags:
+        - Psu Authentication
+      operationId: login
+      summary: Login user to open-banking
+      description: TBD
+      requestBody:
+        description: User credentials object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsuAuthBody'
+        required: true
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_UserAccepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorised'
+  '/v1/psu/ais/{authorization-id}/for-approval/login':
+    post:
+      tags:
+        - Psu Authentication and consent approval
+      operationId: loginForApproval
+      summary: Login user to open-banking
+      description: TBD
+      requestBody:
+        description: User credentials object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsuAuthBody'
+        required: true
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/authorization-id'
+        - $ref: '#/components/parameters/redirectCode'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_UserAccepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorised'
+  '/v1/psu/pis/{authorization-id}/for-approval/login':
+    post:
+      tags:
+        - Psu Authentication and consent approval
+      operationId: loginForPaymentApproval
+      summary: Login user to open-banking to perform payment
+      description: TBD
+      requestBody:
+        description: User credentials object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsuAuthBody'
+        required: true
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/authorization-id'
+        - $ref: '#/components/parameters/redirectCode'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_UserAccepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorised'
+  '/v1/psu/pis/{authorization-id}/anonymous':
+    post:
+      tags:
+        - Psu Authentication and consent approval
+      operationId: loginForAnonymousPaymentApproval
+      summary: Login user to open-banking to perform payment (anonymous to OPBA)
+      description: TBD
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/authorization-id'
+        - $ref: '#/components/parameters/redirectCode'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_UserAccepted'
+        '401':
+          $ref: '#/components/responses/401_Unauthorised'
+  '/v1/psu/ais/{authorization-id}/renewal-authorization-session-key':
+    get:
+      tags:
+        - Psu Authentication
+      operationId: renewalAuthorizationSessionKey
+      summary: the AuthorizationSessionKey is replaces with a new one
+      description: 'Input is the old cookie, response is empty with a new cookie'
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/authorization-id'
+      responses:
+        '202':
+          $ref: '#/components/responses/202_RenewalAuthorizationSessionKey'
+        '401':
+          $ref: '#/components/responses/401_Unauthorised'
+  /v1/psu/register:
+    post:
+      tags:
+        - Psu Authentication
+      operationId: registration
+      summary: registration user in open-banking db
+      description: TBD
+      requestBody:
+        description: User credentials object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsuAuthBody'
+        required: true
+      parameters:
+        - $ref: '#/components/parameters/X-Request-ID'
+      responses:
+        '201':
+          $ref: '#/components/responses/201_UserCreated'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+  '/v1/consent/{auth-id}':
+    get:
+      operationId: authUsingGET
+      summary: |
+        Redirect entry point for initiating a consent authorization process.
+      tags:
+        - Auth State Consent Authorization
+      description: >
+        This is the <b>entry point</b> for processing a consent redirected
+
+        by the TppBankingApi to this ConsentAuthorisationApi.
+
+
+        At this entry point, the ConsentAuthorisationApi will use the
+        redirectCode to retrieve the RedirectSession from the TppServer.
+
+        An analysis of the RedirectSession will help decide if the
+        ConsentAuthorisationApi will proceed with an embedded approach
+        (E<sub>1</sub>) or a redirect approach (R<sub>1</sub>).
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/redirectCode1'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AuthorizeResponse'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+  '/v1/consent/{auth-id}/embedded':
+    post:
+      operationId: embeddedUsingPOST
+      tags:
+        - Update Consent Authorization
+      summary: >
+        Generic challenge response end point for updating consent session with
+
+        PSU authentication data while requesting remaining challenges for the
+        ongoing
+
+        authorization process.
+      description: >
+        Update consent session with PSU auth data whereby requesting remaining
+
+        challenges for the ongoing authorization process.
+
+        Returns 202 if one should proceed to some other link. Link to follow is
+        in 'Location' header.
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/redirectCode1'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-XSRF-TOKEN'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsuAuthRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AuthorizeResponse'
+        '202':
+          $ref: '#/components/responses/200_AuthorizeResponse'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+      security:
+        - sessionCookie: []
+  '/v1/consent/{auth-id}/toAspsp/grant':
+    post:
+      operationId: toAspspGrantUsingPOST
+      tags:
+        - Update Consent Authorization
+      summary: >
+        Provides the ConsentAuthorisationApi with the opportunity to redirect
+        the PSU to the ASPSP.
+      description: >
+        Provides the ConsentAuthorisationApi with the opportunity to redirect
+        the PSU to the ASPSP.
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-XSRF-TOKEN'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizeRequest'
+        required: true
+      responses:
+        '302':
+          $ref: '#/components/responses/302_Redirect_to_ASPSP'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+      security:
+        - sessionCookie: []
+  '/v1/consent/{auth-id}/deny':
+    post:
+      operationId: denyUsingPOST
+      tags:
+        - Update Consent Authorization
+      summary: >
+        Consent authorization is denied - consent is blocked.
+
+        Closes this session and redirects the PSU back to the FinTechApi or
+        close the application window.
+      description: >
+        Closes this session and redirects the PSU back to the FinTechApi
+
+        or close the application window. In any case, the session of the user
+        will
+
+        be closed and cookies will be deleted with the response to this request.
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/X-Request-ID'
+        - $ref: '#/components/parameters/X-XSRF-TOKEN'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DenyRequest'
+        required: true
+      responses:
+        '302':
+          $ref: '#/components/responses/302_Redirect_to_FinTechApi'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+      security:
+        - sessionCookie: []
+  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/ok':
+    get:
+      operationId: fromAspspOkUsingGET
+      tags:
+        - From ASPSP Consent Authorization
+      summary: >-
+        Redirecting back from ASPSP to ConsentAuthorisationApi after a
+        successful consent authorization.
+      description: >
+        Redirecting back from ASPSP to ConsentAuthorisationApi after a
+        successful consent authorization.
+
+        In any case, the corresponding redirect session of the user will be
+        closed and cookies will be deleted with the response to this request.
+
+
+        ##### Desiging the BackRedirectURL (R<sub>6</sub>)
+
+        The BackRedirectURL (OkUrl, NokUrl, etc... depending of ASPSP API) is
+        the URL used by the ASPSP to send the PsuUserAgent
+
+        back to the ConsentAuthorisationApi. Event though the structure of this
+        URL might be constrained by the nature of the
+
+        ASPSP OpenBankingApi, the BackRedirectURL must contains atleast :
+
+        * A redirect-id (as a path parameter) used to isolate many redirect
+        processes form each order.
+
+        * A consentAuthState (as a path or query parameter) used to protect the
+        TppConsentSessionCookie as a XSRF parameter.
+
+        * The consentAuthState might if necessary be used to encrypt the
+        attached ConsentAuthSessionCookie.
+
+
+        ##### Back-Redirecting PSU to the FinTechApi (4<sub>b</sub>)
+
+        Prior to redirecting the PSU back to the FinTechApi, consent information
+        will be stored by the ConsentAuthorisationApi in a RedirectSession as
+        well.
+
+        * The one time resulting redirectCode will be attached as a query
+        parameter to the location URL leading back to the FinTechApi.
+
+        * After verifying the FinTechRedirectSessionCookie (4<sub>b</sub>), the
+        FinTechApi must forward this redirectCode to the token endpoint of the
+        TppBankingAPi (4<sub>c</sub>). 
+
+        * The TppBankingApi will then retrieve the RedirectSession using the
+        redirectCode and proceed forward with the authorization process.
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/redirectState'
+        - $ref: '#/components/parameters/redirectCode1'
+        - $ref: '#/components/parameters/code'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AuthorizeResponse'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+      security:
+        - redirectCookie: []
+  '/v1/consent/{auth-id}/fromAspsp/{redirectState}/nok':
+    get:
+      operationId: fromAspspNokUsingGET
+      tags:
+        - From ASPSP Consent Authorization
+      summary: Redirecting back from ASPSP to TPP after a failed consent authorization.
+      description: >
+        Redirecting back from ASPSP to TPP after a failed consent authorization.
+
+        In any case, the corresponding redirect session of the user will be
+        closed and cookies will be deleted with the response to this request.
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: '#/components/parameters/redirectState'
+        - $ref: '#/components/parameters/redirectCode1'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_AuthorizeResponse'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+      security:
+        - redirectCookie: []
+  '/v1/banking/consents/{auth-id}/confirm':
+    post:
+      tags:
+        - ConsentConfirmation
+      operationId: confirmConsent
+      summary: Issues new PSU Consent Session Token.
+      description: TBD
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+      responses:
+        '200':
+          $ref: '#/components/responses/200_PsuConsentSession'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+        '404':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/404_NOT_FOUND
+  '/v1/banking/payments/{auth-id}/confirm':
+    post:
+      tags:
+        - PaymentConfirmation
+      operationId: confirmPayment
+      summary: Issues new PSU Consent Session Token.
+      description: TBD
+      parameters:
+        - $ref: '#/components/parameters/auth-id'
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Timestamp-UTC
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/X-Request-Signature
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/Fintech-ID
+        - $ref: ./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID
+        - $ref: >-
+            ./tpp_banking_api_commons.yml#/components/parameters/ServiceSessionPassword
+      responses:
+        '200':
+          $ref: '#/components/responses/200_PsuPaymentSession'
+        '401':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/401_UNAUTHORIZED
+        '404':
+          $ref: ./tpp_banking_api_commons.yml#/components/responses/404_NOT_FOUND
+components:
+  schemas:
+    accountReference:
+      description: |
+        Reference to an account by either:
+          * IBAN, of a payment accounts, or
+          * BBAN, for payment accounts if there is no IBAN, or
+          * the Primary Account Number (PAN) of a card, can be tokenised by the ASPSP due to PCI DSS requirements, or
+          * the Primary Account Number (PAN) of a card in a masked form, or
+          * an alias to access a payment account via a registered mobile phone number (MSISDN).
+      type: object
+      properties:
+        iban:
+          $ref: '#/components/schemas/iban'
+        bban:
+          $ref: '#/components/schemas/bban'
+        pan:
+          $ref: '#/components/schemas/pan'
+        maskedPan:
+          $ref: '#/components/schemas/maskedPan'
+        msisdn:
+          $ref: '#/components/schemas/msisdn'
+        currency:
+          $ref: '#/components/schemas/currencyCode'
+    iban:
+      type: string
+      description: International bank account number ISO 31616.
+      pattern: '[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}'
+      example: FR7612345987650123456789014
+    bban:
+      description: |
+        Basic Bank Account Number (BBAN) Identifier.
+
+        This data element can be used in the body of the Consent request.
+          Message for retrieving Account access Consent from this Account. This
+          data elements is used for payment Accounts which have no IBAN.
+          ISO20022: Basic Bank Account Number (BBAN).
+
+          Identifier used nationally by financial institutions, i.e., in individual countries,
+          generally as part of a National Account Numbering Scheme(s),
+          which uniquely identifies the account of a customer.
+      type: string
+      pattern: '[a-zA-Z0-9]{1,30}'
+      example: BARC12345612345678
+    maskedPan:
+      description: |
+        Masked Primary Account Number.
+      type: string
+      maxLength: 35
+      example: 123456xxxxxx1234
+    msisdn:
+      type: string
+      maxLength: 35
+      description: Mobile phone number.
+      example: +49 170 1234567
+    pan:
+      description: |
+        Primary Account Number according to ISO/IEC 7812.
+      type: string
+      maxLength: 35
+      example: '5409050000000000'
+    amount:
+      type: object
+      required:
+        - currency
+        - amount
+      properties:
+        currency:
+          $ref: '#/components/schemas/currencyCode'
+        amount:
+          $ref: '#/components/schemas/amountValue'
+      example:
+        currency: EUR
+        amount: '123'
+    amountValue:
+      description: >
+        The amount given with fractional digits, where fractions must be
+        compliant to the currency definition.
+
+        Up to 14 significant figures. Negative amounts are signed by minus.
+
+        The decimal separator is a dot.
+
+
+        **Example:**
+
+        Valid representations for EUR with up to two decimals are:
+
+          * 1056
+          * 5768.2
+          * -1.50
+          * 5877.78
+      type: string
+      pattern: '-?[0-9]{1,14}(\\.[0-9]{1,3})?'
+      example: '5877.78'
+    currencyCode:
+      description: |
+        ISO 4217 Alpha 3 currency code.
+      type: string
+      pattern: '[A-Z]{3}'
+      example: EUR
+    bicfi:
+      description: |
+        BICFI
+      type: string
+      pattern: '[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}'
+      example: AAAADEBBXXX
+    address:
+      type: object
+      required:
+        - country
+      properties:
+        streetName:
+          type: string
+          maxLength: 70
+        buildingNumber:
+          type: string
+        townName:
+          type: string
+        postCode:
+          type: string
+        country:
+          $ref: '#/components/schemas/countryCode'
+      example:
+        street: rue blue
+        buildingnNumber: '89'
+        city: Paris
+        postalCode: '75000'
+        country: FR
+    countryCode:
+      description: ISO 3166 ALPHA2 country code.
+      type: string
+      pattern: '[A-Z]{2}'
+      example: SE
+    creditorName:
+      description: Creditor Name.
+      type: string
+      maxLength: 70
+      example: Creditor Name
+    creditorAgentName:
+      description: Creditor agent name.
+      type: string
+      maxLength: 70
+      example: Creditor Agent Name
+    remittanceInformationUnstructured:
+      description: |
+        Unstructured remittance information.
+      type: string
+      maxLength: 140
+      example: Ref Number Merchant
+    createdAt:
+      description: Payment creation time according to OpenBanking database
+      type: string
+      format: date-time
+    generalError:
+      type: object
+      properties:
+        code:
+          type: string
+          example: ERROR_CODE
+        message:
+          type: string
+          example: Error description message
+    bankSearchResponse:
+      title: Bank Search Response
+      type: object
+      properties:
+        bankDescriptor:
+          type: array
+          items:
+            $ref: '#/components/schemas/bankDescriptor'
+        keyword:
+          type: String
+          description: The bank search input string
+        start:
+          type: integer
+          description: The index of the first result
+        max:
+          type: integer
+          description: The max number of entries to return with the response.
+        total:
+          type: integer
+          description: The total count of entities found for the given search input.
+    bankProfileResponse:
+      type: object
+      properties:
+        bankProfileDescriptor:
+          $ref: '#/components/schemas/bankProfileDescriptor'
+    bankDescriptor:
+      title: Bank Descriptor
+      type: object
+      properties:
+        bankName:
+          type: string
+        bic:
+          type: string
+        bankCode:
+          type: string
+        uuid:
+          type: string
+    bankProfileDescriptor:
+      title: Bank Profile
+      type: object
+      properties:
+        bankName:
+          type: string
+        bic:
+          type: string
+        bankUuid:
+          type: string
+        serviceList:
+          type: array
+          items:
+            type: string
+        consentSupportByService:
+          type: object
+          additionalProperties:
+            type: string
+    accountDetails:
+      description: >
+        The ASPSP shall give at least one of the account reference identifiers:
+          - iban
+          - bban
+          - pan
+          - maskedPan
+          - msisdn
+        If the account is a multicurrency account currency code in "currency" is
+        set to "XXX".
+      type: object
+      required:
+        - currency
+      properties:
+        resourceId:
+          description: >-
+            This shall be filled, if addressable resource are created by the
+            ASPSP on the /accounts or /card-accounts endpoint.
+          type: string
+        iban:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/iban
+        bban:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/bban
+        pan:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/pan
+        maskedPan:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/maskedPan
+        msisdn:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/msisdn
+        currency:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/currencyCode
+        name:
+          description: Name of the account given by the bank or the PSU in online-banking.
+          type: string
+          maxLength: 35
+        product:
+          description: 'Product name of the bank for this account, proprietary definition.'
+          type: string
+          maxLength: 35
+        cashAccountType:
+          $ref: '#/components/schemas/cashAccountType'
+        status:
+          $ref: '#/components/schemas/accountStatus'
+        bic:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/bicfi
+        linkedAccounts:
+          description: >-
+            Case of a set of pending card transactions, the APSP will provide
+            the relevant cash account the card is set up on.
+          type: string
+          maxLength: 70
+        usage:
+          description: |
+            Specifies the usage of the account:
+              * PRIV: private personal account
+              * ORGA: professional account
+          type: string
+          maxLength: 4
+          enum:
+            - PRIV
+            - ORGA
+        details:
+          description: |
+            Specifications that might be provided by the ASPSP:
+              - characteristics of the account
+              - characteristics of the relevant card
+          type: string
+          maxLength: 140
+        _links:
+          $ref: '#/components/schemas/linksAccountDetails'
+        ownerName:
+          description: >-
+            Name of the legal account owner. If there is more than one owner,
+            then e.g. two names might be noted here.
+          type: string
+          maxLength: 70
+        ownerAddress:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/address
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/balance'
+    balance:
+      description: |
+        A balance
+      type: object
+      properties:
+        balanceAmount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/amount
+        balanceType:
+          type: string
+        lastChangedDateTime:
+          type: string
+          format: date-time
+        referenceDate:
+          type: string
+          format: date;
+    accountList:
+      description: |
+        List of accounts with details.
+      type: object
+      required:
+        - accounts
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/accountDetails'
+    accountReport:
+      description: >
+        JSON based account report.
+
+        This account report contains transactions resulting from the query
+        parameters.
+
+
+        'booked' shall be contained if bookingStatus parameter is set to
+        "booked" or "both".
+
+
+        'pending' is not contained if the bookingStatus parameter is set to
+        "booked".
+      type: object
+      required:
+        - _links
+      properties:
+        booked:
+          $ref: '#/components/schemas/transactionList'
+        pending:
+          $ref: '#/components/schemas/transactionList'
+    accountStatus:
+      description: >
+        Account status. The value is one of the following:
+          - "enabled": account is available
+          - "deleted": account is terminated
+          - "blocked": account is blocked e.g. for legal reasons
+        If this field is not used, than the account is available in the sense of
+        this specification.
+      type: string
+      enum:
+        - enabled
+        - deleted
+        - blocked
+    bankTransactionCode:
+      description: >
+        Bank transaction code as used by the ASPSP and using the sub elements of
+        this structured code defined by ISO 20022.
+
+
+        This code type is concatenating the three ISO20022 Codes
+          * Domain Code,
+          * Family Code, and
+          * SubFamiliy Code
+        by hyphens, resulting in �DomainCode�-�FamilyCode�-�SubFamilyCode�.
+      type: string
+      example: PMNT-RCDT-ESCT
+    bookingDate:
+      description: |
+        The date when an entry is posted to an account on the ASPSPs books.
+      type: string
+      format: date
+    cashAccountType:
+      description: |
+        ExternalCashAccountType1Code from ISO 20022.
+      type: string
+    debtorName:
+      description: Debtor Name.
+      type: string
+      maxLength: 70
+      example: Debtor Name
+    hrefType:
+      description: Link to a resource.
+      type: object
+      properties:
+        href:
+          $ref: '#/components/schemas/hrefEntry'
+    hrefEntry:
+      description: Link to a resource.
+      type: string
+      example: 'https://www.example.com/path/resource?parameter=value'
+    linksAccountDetails:
+      description: >
+        Links to the account, which can be directly used for retrieving account
+        information from this dedicated account.
+
+
+        Links to "balances" and/or "transactions"
+
+
+        These links are only supported, when the corresponding consent has been
+        already granted.
+      type: object
+      properties:
+        balances:
+          $ref: '#/components/schemas/hrefType'
+        transactions:
+          $ref: '#/components/schemas/hrefType'
+    proprietaryBankTransactionCode:
+      description: >
+        Proprietary bank transaction code as used within a community or within
+        an ASPSP e.g.
+
+        for MT94x based transaction reports.
+      type: string
+      maxLength: 35
+    purposeCode:
+      description: >
+        ExternalPurpose1Code from ISO 20022.
+
+
+        Values from ISO 20022 External Code List ExternalCodeSets_1Q2018 June
+        2018.
+      type: string
+      enum:
+        - BKDF
+        - BKFE
+        - BKFM
+        - BKIP
+        - BKPP
+        - CBLK
+        - CDCB
+        - CDCD
+        - CDCS
+        - CDDP
+        - CDOC
+        - CDQC
+        - ETUP
+        - FCOL
+        - MTUP
+        - ACCT
+        - CASH
+        - COLL
+        - CSDB
+        - DEPT
+        - INTC
+        - LIMA
+        - NETT
+        - BFWD
+        - CCIR
+        - CCPC
+        - CCPM
+        - CCSM
+        - CRDS
+        - CRPR
+        - CRSP
+        - CRTL
+        - EQPT
+        - EQUS
+        - EXPT
+        - EXTD
+        - FIXI
+        - FWBC
+        - FWCC
+        - FWSB
+        - FWSC
+        - MARG
+        - MBSB
+        - MBSC
+        - MGCC
+        - MGSC
+        - OCCC
+        - OPBC
+        - OPCC
+        - OPSB
+        - OPSC
+        - OPTN
+        - OTCD
+        - REPO
+        - RPBC
+        - RPCC
+        - RPSB
+        - RPSC
+        - RVPO
+        - SBSC
+        - SCIE
+        - SCIR
+        - SCRP
+        - SHBC
+        - SHCC
+        - SHSL
+        - SLEB
+        - SLOA
+        - SWBC
+        - SWCC
+        - SWPT
+        - SWSB
+        - SWSC
+        - TBAS
+        - TBBC
+        - TBCC
+        - TRCP
+        - AGRT
+        - AREN
+        - BEXP
+        - BOCE
+        - COMC
+        - CPYR
+        - GDDS
+        - GDSV
+        - GSCB
+        - LICF
+        - MP2B
+        - POPE
+        - ROYA
+        - SCVE
+        - SERV
+        - SUBS
+        - SUPP
+        - TRAD
+        - CHAR
+        - COMT
+        - MP2P
+        - ECPG
+        - ECPR
+        - ECPU
+        - EPAY
+        - CLPR
+        - COMP
+        - DBTC
+        - GOVI
+        - HLRP
+        - HLST
+        - INPC
+        - INPR
+        - INSC
+        - INSU
+        - INTE
+        - LBRI
+        - LIFI
+        - LOAN
+        - LOAR
+        - PENO
+        - PPTI
+        - RELG
+        - RINP
+        - TRFD
+        - FORW
+        - FXNT
+        - ADMG
+        - ADVA
+        - BCDM
+        - BCFG
+        - BLDM
+        - BNET
+        - CBFF
+        - CBFR
+        - CCRD
+        - CDBL
+        - CFEE
+        - CGDD
+        - CORT
+        - COST
+        - CPKC
+        - DCRD
+        - DSMT
+        - DVPM
+        - EDUC
+        - FACT
+        - FAND
+        - FCPM
+        - FEES
+        - GOVT
+        - ICCP
+        - IDCP
+        - IHRP
+        - INSM
+        - IVPT
+        - MCDM
+        - MCFG
+        - MSVC
+        - NOWS
+        - OCDM
+        - OCFG
+        - OFEE
+        - OTHR
+        - PADD
+        - PTSP
+        - RCKE
+        - RCPT
+        - REBT
+        - REFU
+        - RENT
+        - REOD
+        - RIMB
+        - RPNT
+        - RRBN
+        - RVPM
+        - SLPI
+        - SPLT
+        - STDY
+        - TBAN
+        - TBIL
+        - TCSC
+        - TELI
+        - TMPG
+        - TPRI
+        - TPRP
+        - TRNC
+        - TRVC
+        - WEBI
+        - ANNI
+        - CAFI
+        - CFDI
+        - CMDT
+        - DERI
+        - DIVD
+        - FREX
+        - HEDG
+        - INVS
+        - PRME
+        - SAVG
+        - SECU
+        - SEPI
+        - TREA
+        - UNIT
+        - FNET
+        - FUTR
+        - ANTS
+        - CVCF
+        - DMEQ
+        - DNTS
+        - HLTC
+        - HLTI
+        - HSPC
+        - ICRF
+        - LTCF
+        - MAFC
+        - MARF
+        - MDCS
+        - VIEW
+        - CDEP
+        - SWFP
+        - SWPP
+        - SWRS
+        - SWUF
+        - ADCS
+        - AEMP
+        - ALLW
+        - ALMY
+        - BBSC
+        - BECH
+        - BENE
+        - BONU
+        - CCHD
+        - COMM
+        - CSLP
+        - GFRP
+        - GVEA
+        - GVEB
+        - GVEC
+        - GVED
+        - GWLT
+        - HREC
+        - PAYR
+        - PEFC
+        - PENS
+        - PRCP
+        - RHBS
+        - SALA
+        - SSBE
+        - LBIN
+        - LCOL
+        - LFEE
+        - LMEQ
+        - LMFI
+        - LMRK
+        - LREB
+        - LREV
+        - LSFL
+        - ESTX
+        - FWLV
+        - GSTX
+        - HSTX
+        - INTX
+        - NITX
+        - PTXP
+        - RDTX
+        - TAXS
+        - VATX
+        - WHLD
+        - TAXR
+        - B112
+        - BR12
+        - TLRF
+        - TLRR
+        - AIRB
+        - BUSB
+        - FERB
+        - RLWY
+        - TRPT
+        - CBTV
+        - ELEC
+        - ENRG
+        - GASB
+        - NWCH
+        - NWCM
+        - OTLC
+        - PHON
+        - UBIL
+        - WTER
+    reportExchangeRateList:
+      description: Array of exchange rates.
+      type: array
+      items:
+        $ref: '#/components/schemas/reportExchangeRate'
+    reportExchangeRate:
+      description: Exchange Rate.
+      type: object
+      required:
+        - sourceCurrency
+        - exchangeRate
+        - unitCurrency
+        - targetCurrency
+        - quotationDate
+      properties:
+        sourceCurrency:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/currencyCode
+        exchangeRate:
+          type: string
+        unitCurrency:
+          type: string
+        targetCurrency:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/currencyCode
+        quotationDate:
+          type: string
+          format: date
+        contractIdentification:
+          type: string
+    transactionDetails:
+      description: Transaction details.
+      type: object
+      required:
+        - transactionAmount
+      properties:
+        transactionId:
+          description: >
+            the Transaction Id can be used as access-ID in the API, where more
+            details on an transaction is offered.
+
+            If this data attribute is provided this shows that the AIS can get
+            access on more details about this
+
+            transaction using the Get transaction details request.
+          type: string
+        entryReference:
+          description: >
+            Is the identification of the transaction as used e.g. for reference
+            for deltafunction on application level.
+
+            The same identification as for example used within camt.05x
+            messages.
+          type: string
+          maxLength: 35
+        endToEndId:
+          description: Unique end to end identity.
+          type: string
+          maxLength: 35
+        mandateId:
+          description: 'Identification of Mandates, e.g. a SEPA Mandate ID.'
+          type: string
+          maxLength: 35
+        checkId:
+          description: Identification of a Cheque.
+          type: string
+          maxLength: 35
+        creditorId:
+          description: 'Identification of Creditors, e.g. a SEPA Creditor ID.'
+          type: string
+          maxLength: 35
+        bookingDate:
+          $ref: '#/components/schemas/bookingDate'
+        valueDate:
+          description: >-
+            The Date at which assets become available to the account owner in
+            case of a credit.
+          type: string
+          format: date
+        transactionAmount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/amount
+        currencyExchange:
+          $ref: '#/components/schemas/reportExchangeRateList'
+        creditorName:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/creditorName
+        creditorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        ultimateCreditor:
+          $ref: '#/components/schemas/ultimateCreditor'
+        debtorName:
+          $ref: '#/components/schemas/debtorName'
+        debtorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        ultimateDebtor:
+          $ref: '#/components/schemas/ultimateDebtor'
+        remittanceInformationUnstructured:
+          $ref: >-
+            ./tpp_banking_api_commons.yml#/components/schemas/remittanceInformationUnstructured
+        remittanceInformationStructured:
+          description: >
+            Reference as contained in the structured remittance reference
+            structure (without the surrounding XML structure).
+
+
+            Different from other places the content is containt in plain form
+            not in form of a structered field.
+          type: string
+          maxLength: 140
+        additionalInformation:
+          description: >
+            Might be used by the ASPSP to transport additional transaction
+            related information to the PSU.
+          type: string
+          maxLength: 512
+        purposeCode:
+          $ref: '#/components/schemas/purposeCode'
+        bankTransactionCode:
+          $ref: '#/components/schemas/bankTransactionCode'
+        proprietaryBankTransactionCode:
+          $ref: '#/components/schemas/proprietaryBankTransactionCode'
+    transactionList:
+      description: Array of transaction details.
+      type: array
+      items:
+        $ref: '#/components/schemas/transactionDetails'
+    transactionsResponse:
+      description: >
+        Body of the JSON response for a successful read transaction list
+        request.
+
+        This account report contains transactions resulting from the query
+        parameters.
+      type: object
+      properties:
+        account:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        transactions:
+          $ref: '#/components/schemas/accountReport'
+    ultimateCreditor:
+      description: Ultimate Creditor.
+      type: string
+      maxLength: 70
+      example: Ultimate Creditor
+    ultimateDebtor:
+      description: Ultimate Debtor.
+      type: string
+      maxLength: 70
+      example: Ultimate Debtor
+    paymentInitiation:
+      required:
+        - creditorAccount
+        - creditorName
+        - debtorAccount
+        - instructedAmount
+      type: object
+      properties:
+        endToEndIdentification:
+          maxLength: 35
+          type: string
+        debtorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        instructedAmount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/amount
+        creditorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        creditorAgent:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/bicfi
+        creditorAgentName:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/creditorAgentName
+        creditorName:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/creditorName
+        creditorAddress:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/address
+        remittanceInformationUnstructured:
+          $ref: >-
+            ./tpp_banking_api_commons.yml#/components/schemas/remittanceInformationUnstructured
+        requestedExecutionDate:
+          type: string
+          format: date
+        requestedExecutionTime:
+          type: string
+        instantPayment:
+          type: boolean
+    paymentInitiationResponse:
+      description: Body of the response for a successful payment initiation request.
+      type: object
+      properties:
+        msg:
+          type: string
+          description: use redirect link message
+    paymentInformationResponse:
+      description: >
+        Generic JSON response body consistion of the corresponding payment
+        initation JSON body together with an optional transaction status field.
+      type: object
+      required:
+        - debtorAccount
+        - instructedAmount
+        - creditorAccount
+        - creditorName
+      properties:
+        endToEndIdentification:
+          type: string
+          maxLength: 35
+        debtorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        instructedAmount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/amount
+        creditorAccount:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/accountReference
+        creditorAgent:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/bicfi
+        creditorName:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/creditorName
+        creditorAddress:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/address
+        remittanceInformationUnstructured:
+          $ref: >-
+            ./tpp_banking_api_commons.yml#/components/schemas/remittanceInformationUnstructured
+        transactionStatus:
+          $ref: '#/components/schemas/transactionStatus'
+        createdAt:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/createdAt
+    paymentStatusResponse:
+      description: >-
+        Body of the response for a successful payment initiation status request
+        in case of an JSON based endpoint.
+      type: object
+      required:
+        - transactionStatus
+      properties:
+        transactionStatus:
+          $ref: '#/components/schemas/transactionStatus'
+        fundsAvailable:
+          $ref: '#/components/schemas/fundsAvailable'
+        psuMessage:
+          $ref: '#/components/schemas/psuMessageText'
+        createdAt:
+          $ref: ./tpp_banking_api_commons.yml#/components/schemas/createdAt
+    transactionStatus:
+      description: The transaction status
+      type: string
+    fundsAvailable:
+      description: >-
+        Equals true if sufficient funds are available at the time of the
+        request, false otherwise.
+      type: boolean
+    psuMessageText:
+      description: Text to be displayed to the PSU.
+      type: string
+      maxLength: 500
+    PsuAuthBody:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+      example:
+        login: user1
+        password: '123'
+    LoginResponse:
+      title: Login Response
+      type: object
+      properties:
+        xsrfToken:
+          type: string
+          description: Authorization cookie hash
+    psuMessage:
+      title: PsuMessage
+      type: object
+      properties:
+        category:
+          type: string
+          enum:
+            - ERROR
+            - WARNING
+            - INFO
+        code:
+          type: string
+        path:
+          type: string
+        text:
+          type: string
+    AccountStatus:
+      type: string
+      enum:
+        - ENABLED
+        - DELETED
+        - BLOCKED
+    AccountType:
+      type: string
+      enum:
+        - CACC
+        - CASH
+        - CHAR
+        - CISH
+        - COMM
+        - CPAC
+        - LLSV
+        - LOAN
+        - MGLD
+        - MOMA
+        - NREX
+        - ODFT
+        - ONDP
+        - OTHR
+        - SACC
+        - SLRY
+        - SVGS
+        - TAXE
+        - TRAN
+        - TRAS
+    BalanceType:
+      type: string
+      enum:
+        - CLOSING_BOOKED
+        - EXPECTED
+        - AUTHORISED
+        - OPENING_BOOKED
+        - INTERIM_AVAILABLE
+        - FORWARD_AVAILABLE
+        - NONINVOICED
+    PaymentProduct:
+      type: string
+      enum:
+        - SEPA
+        - INSTANT_SEPA
+        - TARGET2
+        - CROSS_BORDER
+    PaymentStatus:
+      type: string
+      enum:
+        - ACCC
+        - ACCP
+        - ACSC
+        - ACSP
+        - ACTC
+        - ACWC
+        - ACWP
+        - RCVD
+        - PDNG
+        - RJCT
+        - CANC
+        - ACFC
+        - PATC
+    ScaStatus:
+      type: string
+      description: The sca status. Used to manage the consent authorization flows.
+      enum:
+        - received
+        - psuIdentified
+        - psuAuthenticated
+        - scaMethodSelected
+        - started
+        - finalised
+        - failed
+        - exempted
+    AccountBalance:
+      title: AccountBalance
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        balanceType:
+          $ref: '#/components/schemas/BalanceType'
+        iban:
+          type: string
+        lastChangeDateTime:
+          type: string
+          format: date-time
+        lastCommittedTransaction:
+          type: string
+        referenceDate:
+          type: string
+          format: date
+    AccountDetails:
+      title: AccountDetails
+      type: object
+      properties:
+        accountStatus:
+          $ref: '#/components/schemas/AccountStatus'
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountBalance'
+        bban:
+          type: string
+        bic:
+          type: string
+        currency:
+          type: string
+        details:
+          type: string
+        iban:
+          type: string
+        id:
+          type: string
+        linkedAccounts:
+          type: string
+        maskedPan:
+          type: string
+        msisdn:
+          type: string
+        name:
+          type: string
+        pan:
+          type: string
+        product:
+          type: string
+        usageType:
+          type: string
+          enum:
+            - PRIV
+            - ORGA
+    AccountReference:
+      title: AccountReference
+      type: object
+      properties:
+        bban:
+          type: string
+        currency:
+          type: string
+        iban:
+          type: string
+        maskedPan:
+          type: string
+        msisdn:
+          type: string
+        pan:
+          type: string
+    Address:
+      title: Address
+      type: object
+      properties:
+        buildingNumber:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        postalCode:
+          type: string
+        street:
+          type: string
+    AisAccountAccessInfo:
+      title: AisAccountAccessInfo
+      type: object
+      properties:
+        accounts:
+          type: array
+          description: Access to accounts
+          items:
+            $ref: '#/components/schemas/AccountReference'
+        allPsd2:
+          type: string
+          description: 'Consent on all accounts, balances and transactions of psu'
+          example: ALL_ACCOUNTS
+          enum:
+            - ALL_ACCOUNTS
+            - ALL_ACCOUNTS_WITH_BALANCES
+        availableAccounts:
+          type: string
+          description: Consent on all available accounts of psu
+          example: ALL_ACCOUNTS
+          enum:
+            - ALL_ACCOUNTS
+            - ALL_ACCOUNTS_WITH_BALANCES
+        balances:
+          type: array
+          description: Access to balances
+          items:
+            $ref: '#/components/schemas/AccountReference'
+        transactions:
+          type: array
+          description: Access to transactions
+          items:
+            $ref: '#/components/schemas/AccountReference'
+      description: Ais account access information
+    AisConsentRequest:
+      title: AisConsentRequest
+      required:
+        - access
+        - frequencyPerDay
+        - recurringIndicator
+        - validUntil
+      type: object
+      properties:
+        access:
+          $ref: '#/components/schemas/AisAccountAccessInfo'
+        frequencyPerDay:
+          type: integer
+          description: >-
+            Maximum frequency for an access per day. For a once-off access, this
+            attribute is set to 1
+          format: int32
+          example: 4
+        recurringIndicator:
+          type: boolean
+          description: >-
+            'true', if the consent is for recurring access to the account data ,
+            'false', if the consent is for one access to the account data
+          example: false
+        validUntil:
+          type: string
+          description: >-
+            Consent`s expiration date. The content is the local ASPSP date in
+            ISODate Format
+          format: date
+          example: '2020-10-10T00:00:00.000Z'
+        combinedServiceIndicator:
+          type: boolean
+          description: >-
+            'true', if the consent is i.e. account list and then payment
+            'false', if the consent is for one access to the account data
+          default: false
+      description: Ais consent request
+    Amount:
+      title: Amount
+      type: object
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+    AuthViolation:
+      title: AuthViolation
+      type: object
+      description: Missing parameters required for authorization
+      properties:
+        type:
+          type: string
+        scope:
+          type: string
+        code:
+          type: string
+        captionMessage:
+          type: string
+    ConsentAuth:
+      title: ConsentAuth
+      type: object
+      description: Transport object for consent API request response
+      properties:
+        action:
+          type: string
+          enum:
+            - LIST_ACCOUNTS
+            - LIST_TRANSACTIONS
+            - INITIATE_PAYMENT
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthViolation'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountDetails'
+        authMessageTemplate:
+          type: string
+        authenticationMethodId:
+          type: string
+          description: >-
+            An identification provided by the ASPSP for the later identification
+            of the authentication method selection.
+          example: myAuthenticationID
+        bulkPayment:
+          $ref: '#/components/schemas/BulkPayment'
+        consent:
+          $ref: '#/components/schemas/AisConsentRequest'
+        bankName:
+          type: string
+          description: Name of current bank
+        fintechName:
+          type: string
+          description: Name of current fintech
+        consentAuthState:
+          type: string
+          description: >-
+            This is the CSRF-State String of the ConsentAuthorisationApi. It is
+            a transient reference of the consent request. It encodes a key that
+            is used to encrypt information stored in the corresponding
+            ConsentAuthSessionCookie.
+        periodicPayment:
+          $ref: '#/components/schemas/PeriodicPayment'
+        psuCorporateId:
+          type: string
+        psuId:
+          type: string
+        scaMethods:
+          type: array
+          description: List of sca methods for selection if necessary.
+          items:
+            $ref: '#/components/schemas/ScaUserData'
+        scaStatus:
+          $ref: '#/components/schemas/ScaStatus'
+        singlePayment:
+          $ref: '#/components/schemas/SinglePayment'
+        challengeData:
+          $ref: '#/components/schemas/ChallengeData'
+    ConsentAuthRequirement:
+      title: ConsentAuth
+      type: object
+      description: Transport object for consent API request response
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsentAuthRequiredField'
+    ConsentAuthRequiredField:
+      title: ConsentAuthRequiredField
+      type: object
+      description: Fields that are required to be filled in order to authorize consent
+      properties:
+        type:
+          type: string
+          description: 'Field data type - boolean, string, etc.'
+        scope:
+          type: string
+          description: Scope of the field.
+        code:
+          type: string
+          description: Field code - what does the field mean.
+        captionMessage:
+          type: string
+          description: Custom message that describes field meaning
+    AuthorizeRequest:
+      title: AuthorizeRequest
+      type: object
+      description: Contains information used to legitimate a request.
+      properties:
+        consentAuth:
+          $ref: '#/components/schemas/ConsentAuthRequirement'
+    DenyRequest:
+      title: DenyRequest
+      type: object
+      description: Consent authorization denied descriptor
+      properties:
+        consentAuth:
+          $ref: '#/components/schemas/ConsentAuth'
+        backToFinTech:
+          type: boolean
+          description: Will indicate if PSU wants to be sent back to FinTechApi.
+        exitPage:
+          type: string
+          description: >-
+            In case there is no redirect back to TPP desired, exit page can be
+            specified by ConsentAuthorisationApi
+        forgetConsent:
+          type: boolean
+          description: Set to true if consent object shall be forgotten or frozen.
+    PsuAuthRequest:
+      title: PsuAuthRequest
+      required:
+        - scaAuthenticationData
+      type: object
+      description: Contains information used to legitimate a request.
+      properties:
+        consentAuth:
+          $ref: '#/components/schemas/ConsentAuth'
+        scaAuthenticationData:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            SCA authentication data, depending on the chosen authentication
+            method. If the data is binary, then it is base64 encoded.
+        extras:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            ASPSP customary authorization parameters required to i.e. initiate
+            consent.
+    BulkPayment:
+      title: BulkPayment
+      type: object
+      properties:
+        batchBookingPreferred:
+          type: boolean
+        debtorAccount:
+          $ref: '#/components/schemas/AccountReference'
+        paymentId:
+          type: string
+        paymentProduct:
+          $ref: '#/components/schemas/PaymentProduct'
+        paymentStatus:
+          $ref: '#/components/schemas/PaymentStatus'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SinglePayment'
+        requestedExecutionDate:
+          type: string
+          format: date
+    PeriodicPayment:
+      title: PeriodicPayment
+      type: object
+      properties:
+        paymentData:
+          $ref: '#/components/schemas/SinglePayment'
+        dayOfExecution:
+          type: integer
+          format: int32
+        endDate:
+          type: string
+          format: date
+        executionRule:
+          type: string
+        frequency:
+          type: string
+          enum:
+            - Daily
+            - Weekly
+            - EveryTwoWeeks
+            - Monthly
+            - EveryTwoMonths
+            - Quarterly
+            - SemiAnnual
+            - Annual
+        startDate:
+          type: string
+          format: date
+    ScaUserData:
+      title: ScaUserData
+      type: object
+      properties:
+        decoupled:
+          type: boolean
+        id:
+          type: string
+        methodValue:
+          type: string
+        scaMethod:
+          type: string
+          enum:
+            - EMAIL
+            - MOBILE
+            - CHIP_OTP
+            - PHOTO_OTP
+            - PUSH_OTP
+            - SMS_OTP
+            - APP_OTP
+        staticTan:
+          type: string
+        usesStaticTan:
+          type: boolean
+    SinglePayment:
+      title: SinglePayment
+      type: object
+      properties:
+        creditorAccount:
+          $ref: '#/components/schemas/AccountReference'
+        creditorAddress:
+          $ref: '#/components/schemas/Address'
+        creditorAgent:
+          type: string
+        creditorName:
+          type: string
+        debtorAccount:
+          $ref: '#/components/schemas/AccountReference'
+        endToEndIdentification:
+          type: string
+        instructedAmount:
+          $ref: '#/components/schemas/Amount'
+        paymentId:
+          type: string
+        paymentProduct:
+          $ref: '#/components/schemas/PaymentProduct'
+        paymentStatus:
+          $ref: '#/components/schemas/PaymentStatus'
+        remittanceInformationUnstructured:
+          type: string
+        requestedExecutionDate:
+          type: string
+          format: date
+        requestedExecutionTime:
+          type: string
+    ChallengeData:
+      title: ChallengeData
+      type: object
+      description: Challege data for SCA like OpticTAN image
+      properties:
+        image:
+          type: string
+          format: byte
+        data:
+          type: array
+          items:
+            type: string
+        imageLink:
+          type: string
+        otpMaxLength:
+          type: integer
+          format: int32
+        otpFormat:
+          type: string
+          enum:
+            - CHARACTERS
+            - INTEGER
+        additionalInformation:
+          type: string
+    PsuConsentSessionResponse:
+      type: object
+      properties:
+        authorizationSessionId:
+          type: string
+          format: uuid
+    PsuPaymentSessionResponse:
+      type: object
+      properties:
+        authorizationSessionId:
+          type: string
+          format: uuid
+  responses:
+    401_UNAUTHORIZED:
+      description: |
+        Unauthorised. Access token absent or invalid.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: ./tpp_banking_api_commons.yml#/components/schemas/generalError
+    404_NOT_FOUND:
+      description: |
+        Resource not found or path parameter is wrong.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: ./tpp_banking_api_commons.yml#/components/schemas/generalError
+    200_BankSearchResult:
+      description: The result of a bank search.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bankSearchResponse'
+    200_BankProfile:
+      description: Response containing the service profile of a bank.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bankProfileResponse'
+    200_AccountsTransactions:
+      description: OK
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/transactionsResponse'
+    202_AUTHORIZATION_REQUIRED:
+      description: >
+        User authorisation session mandated. Agent shall redirect the user to
+        the Authorisation URI provided in response
+
+        using 'Location' header. This is soft redirection, so that FinTech
+        should inform user about redirection.
+      headers:
+        Location:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Location
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+    ErrorShownInXErrorCodeHeaderField:
+      description: |
+        The headerfield tells what exactly was wrong.
+      headers:
+        X-ERROR-CODE:
+          schema:
+            type: string
+    200_AccountList:
+      description: OK
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/accountList'
+    202_PaymentInitiationResponse:
+      description: ACCEPTED
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+        Service-Session-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Service-Session-ID
+        Authorization-Session-ID:
+          $ref: >-
+            ./tpp_banking_api_commons.yml#/components/headers/Authorization-Session-ID
+        Redirect-Code:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Redirect-Code
+        Location:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Location
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/paymentInitiationResponse'
+    200_PaymentInformationResponse:
+      description: OK
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+        Service-Session-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Service-Session-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/paymentInformationResponse'
+    200_PaymentStatusResponse:
+      description: OK
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+        Service-Session-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/Service-Session-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/paymentStatusResponse'
+    201_UserCreated:
+      description: User created sucessfully
+      headers:
+        Location:
+          schema:
+            type: string
+        X-Request-ID:
+          $ref: '#/components/parameters/X-Request-ID'
+    202_RenewalAuthorizationSessionKey:
+      description: User logged in
+      headers:
+        X-Request-ID:
+          $ref: '#/components/parameters/X-Request-ID'
+        Set-Cookie:
+          schema:
+            type: string
+            example: Authorization-Session-ID=abcde12345; Path=/; HttpOnly
+    202_UserAccepted:
+      description: User logged in
+      headers:
+        X-Request-ID:
+          $ref: '#/components/parameters/X-Request-ID'
+        Set-Cookie:
+          schema:
+            type: string
+            example: Authorization-Session-ID=abcde12345; Path=/; HttpOnly
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginResponse'
+    400_BadRequest:
+      description: |
+        Wrong registration parameters or user exist
+      headers:
+        X-Request-ID:
+          $ref: '#/components/parameters/X-Request-ID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/generalError'
+    401_Unauthorised:
+      description: |
+        Bad username or password
+      headers:
+        X-Request-ID:
+          $ref: '#/components/parameters/X-Request-ID'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/generalError'
+    200_AuthorizeResponse:
+      description: >
+        All responses sent by the ConsentAuthorisationApi to the UI are derived
+        from the AuthorizeResponse object. 
+
+        This object presents :
+
+        * The consentAuthState as a XSRF parameter used to reauthenticate the
+        ConsentAuthSessionCookie. It can also be used if required
+
+        to encrypt information stored in the corresponding
+        ConsentAuthSessionCookie.
+
+        * The AuthorizeResponse object info also contains information used to
+        display a qualified page to the PSU 
+
+        prio to eventually redirecting the PSU to the target ASPSP.
+
+        * Any session, account or payment information needed to manage the
+        authorization process is stored in both AuthorizeResponse and encrypted
+        in the ConsentAuthSessionCookie.
+
+        * The ConsentAuthSessionCookie is secure and httpOnly.
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        Set-Cookie:
+          $ref: '#/components/headers/Set-SessionCookie'
+        X-XSRF-TOKEN:
+          $ref: '#/components/headers/X-XSRF-TOKEN'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConsentAuth'
+    302_Redirect_to_ASPSP:
+      description: >
+        Redirects UserAgent to the ASPSP online banking interface.
+
+
+        ##### Setting a RedirectCookie
+
+        The redirect response to the PsuUserAgent must set a RedirectCookie.
+
+        * This cookie contains information associated with this specific
+        redirect session.
+
+        * The XSRF Token used to validate this the RedirectCookie is path
+        parameter redirectState
+
+        * This RedirectCookie must have a life time equal to the expected
+        duration of the corresponding redirect session at the target ASPSP
+        OnlineBankingApi.
+
+        * Prior to redirecting any associated SessionCookie (sharing the same
+        auth-id) will be deleted.
+      headers:
+        Location:
+          $ref: '#/components/headers/Location-ASPSP'
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        Set-Cookie:
+          $ref: '#/components/headers/Set-RedirectCookie'
+    302_Redirect_to_FinTechApi:
+      description: |
+        Redirects UserAgent back to the FinTechAPI.
+      headers:
+        Location:
+          $ref: '#/components/headers/Location-FinTechApi'
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        Set-Cookie:
+          $ref: '#/components/headers/Reset-Cookies'
+    400_BadRequest1:
+      description: Bad request
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        X-XSRF-TOKEN:
+          $ref: '#/components/headers/X-XSRF-TOKEN'
+        Set-Cookie:
+          $ref: '#/components/headers/Set-SessionCookie'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/psuMessage'
+    401_Unauthorized:
+      description: |
+        Access credentials absent or invalid. This happens when
+        * Provided credential for login not matching.
+        * Endpoin expect a session cookie but none is present.
+        * Session cookie is present but associated stateString does not match.
+
+        As a consequence, we reset existing FinTechLoginSessionState if any. 
+        Nevertheless we do not reset RedirectSessionCookie.
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        Set-Cookie:
+          $ref: '#/components/headers/Reset-Cookies'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/psuMessage'
+    404_NotFound:
+      description: The specified resource was not found
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/X-Request-ID'
+        X-XSRF-TOKEN:
+          $ref: '#/components/headers/X-XSRF-TOKEN'
+        Set-Cookie:
+          $ref: '#/components/headers/Set-SessionCookie'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/psuMessage'
+    200_PsuConsentSession:
+      description: Response containing the service profile of a bank.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PsuConsentSessionResponse'
+    200_PsuPaymentSession:
+      description: Response containing the service profile of a bank.
+      headers:
+        X-Request-ID:
+          $ref: ./tpp_banking_api_commons.yml#/components/headers/X-Request-ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PsuPaymentSessionResponse'
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      description: |
+        Unique Token that identifies FinTech Session for this request.
+      example: >-
+        Bearer
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik15IGNvb2wgRmludGVjaCBBcHAiLCJpYXQiOjE1MTYyMzkwMjJ9.NfpSq7hot-1x3rZOaqRaSJzNnMw6ltX-9eqxcCQnGbI
+      schema:
+        type: string
+    ServiceSessionPassword:
+      name: Service-Session-Password
+      in: header
+      required: true
+      description: |
+        Password to encrypt users' context
+      example: qwerty
+      schema:
+        type: string
+    Bank-ID:
+      name: Bank-ID
+      in: header
+      required: false
+      description: >
+        A bank identifier, provided by TPP Bank Search API. To be provided by
+        FinTech only if PsuConsentSession is missing.
+      example: 1234-0XGJK
+      schema:
+        type: string
+    Fintech-User-ID:
+      name: Fintech-User-ID
+      in: header
+      required: true
+      description: >
+        An End-User identifier, known by FinTech, that unique for each physical
+        person.
+
+        To be provided by FinTech with every request in order to validate the
+        mapping of service request to the particular user.
+      example: 1234-0XGJK
+      schema:
+        type: string
+    Service-Session-ID:
+      name: Service-Session-ID
+      in: header
+      required: false
+      description: >
+        Unique ID that identifies service session. Can be used for batch
+        processing to correlate input and output.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      required: true
+      description: |
+        Unique ID that identifies this request through common workflow.
+        Shall be contained in HTTP Response as well.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    X-Timestamp-UTC:
+      name: X-Timestamp-UTC
+      in: header
+      required: false
+      description: |
+        The timestamp of the operation.
+      example: '2020-04-14T08:46:33.629Z'
+      schema:
+        type: string
+    X-Pis-Psu-Authentication-Required:
+      name: X-Pis-Psu-Authentication-Required
+      in: header
+      description: >
+        If false, login form to OPBA will not be displayed as there might be
+        nothing to share for payments, so
+
+        that authentication is not necessary. If absent or true - login form for
+        payments will be displayed.
+      example: 'true'
+      schema:
+        type: boolean
+        default: 'true'
+    X-Request-Signature:
+      name: X-Request-Signature
+      in: header
+      required: false
+      description: |
+        A signature of the request by the TPP fintech.
+      schema:
+        type: string
+    Fintech-ID:
+      name: Fintech-ID
+      in: header
+      required: false
+      description: |
+        Unique ID that identifies fintech.
+      example: fintech_123
+      schema:
+        type: string
+    Fintech-Redirect-URL-OK:
+      name: Fintech-Redirect-URL-OK
+      in: header
+      desription: >
+        This header provides the desired URL where PSU will be redirected back
+        after authorisation session in case of
+
+        successful authorisation. This URL might contain unique Identifier of
+        this User and/or Session,
+
+        recognisable by FinTech.
+
+        Since authorisation may be mandated by the bank at any time, this header
+        to be included to all
+
+        service requests, even if PsuConsentSession already exists.
+      required: true
+      schema:
+        type: string
+      example: 'https://example.com/myservice/sf3-3r33-3535?authResult=success'
+    Fintech-Redirect-URL-NOK:
+      name: Fintech-Redirect-URL-NOK
+      in: header
+      desription: >
+        This header provides the desired URL where PSU will be redirected back 
+        after authorisation session in case of
+
+        unsuccessful authorisation (i.e. PSU's authorisation reject, technical
+        failure, lack of credentials etc.).
+
+        This URL might contain unique Identifier of this User and/or Session,
+
+        recognisable by FinTech.
+
+        Since authorisation may be mandated by the bank at any time, this header
+        to be included to all
+
+        service requests, even if PsuConsentSession already exists.
+      required: true
+      schema:
+        type: string
+      example: 'https://example.com/myservice/sf3-3r33-3535/failure'
+    account-id:
+      name: account-id
+      in: path
+      required: true
+      schema:
+        type: string
+    bookingStatus:
+      name: bookingStatus
+      in: query
+      description: |
+        Permitted codes are
+          * "booked",
+          * "pending" and
+          * "both"
+        To support the "pending" and "both" feature is optional for the ASPSP,
+        Error code if not supported in the online banking frontend
+        Default is "booked"
+      required: false
+      schema:
+        type: string
+        enum:
+          - booked
+          - pending
+          - both
+    dateFrom:
+      name: dateFrom
+      in: query
+      description: >
+        Conditional: Starting date (inclusive the date dateFrom) of the
+        transaction list, mandated if no delta access is required.
+
+
+        For booked transactions, the relevant date is the booking date.
+
+
+        For pending transactions, the relevant date is the entry date, which may
+        not be transparent
+
+        neither in this API nor other channels of the ASPSP.
+      required: false
+      schema:
+        type: string
+        format: date
+    dateTo:
+      name: dateTo
+      in: query
+      description: >
+        End date (inclusive the data dateTo) of the transaction list, default is
+        "now" if not given.
+
+
+        Might be ignored if a delta function is used.
+
+
+        For booked transactions, the relevant date is the booking date.
+
+
+        For pending transactions, the relevant date is the entry date, which may
+        not be transparent
+
+        neither in this API nor other channels of the ASPSP.
+      required: false
+      schema:
+        type: string
+        format: date
+    withBalance:
+      name: withBalance
+      in: query
+      description: >
+        For list of accounts this query param defines to not only look for the
+        accounts,
+
+        but for the balances too.
+      schema:
+        type: boolean
+    online:
+      name: online
+      in: query
+      required: false
+      description: >
+        Makes possible to request actual data and update cache if cache is used
+        by protocol implementation.
+      example: 'false'
+      schema:
+        type: boolean
+        default: 'true'
+    deltaList:
+      name: deltaList
+      in: query
+      description: >
+        This data attribute is indicating that the AISP is in favour to get all
+        transactions after the last report access
+
+        for this PSU on the addressed account.
+
+        This is another implementation of a delta access-report.
+
+
+        This delta indicator might be rejected by the ASPSP if this function is
+        not supported.
+
+
+        Optional if supported by API provider
+      schema:
+        type: boolean
+    entryReferenceFrom:
+      name: entryReferenceFrom
+      in: query
+      description: >
+        This data attribute is indicating that the AISP is in favour to get all
+        transactions after
+
+        the transaction with identification entryReferenceFrom alternatively to
+        the above defined period.
+
+        This is a implementation of a delta access.
+
+        If this data element is contained, the entries "dateFrom" and "dateTo"
+        might be ignored by the ASPSP
+
+        if a delta report is supported.
+
+
+        Optional if supported by API provider.
+      required: false
+      schema:
+        type: string
+    PaymentProduct:
+      name: payment-product
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+          - sepa-credit-transfers
+          - instant-sepa-credit-transfers
+          - target-2-payments
+          - cross-border-credit-transfers
+          - pain.001-sepa-credit-transfers
+          - pain.001-instant-sepa-credit-transfers
+          - pain.001-target-2-payments
+          - pain.001-cross-border-credit-transfers
+    authorization-id:
+      name: authorization-id
+      in: path
+      description: Authorization session ID to approve
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    redirectCode:
+      name: redirectCode
+      in: query
+      required: true
+      description: >-
+        Redirect code that acts as a password protecting FinTech requested
+        consent specification
+      example: '12345'
+      schema:
+        type: string
+    auth-id:
+      name: auth-id
+      in: path
+      required: true
+      description: >
+        Used to distinguish between different consent authorization processes
+        started by the same PSU.
+
+        Also included in the corresponding cookie path to limit visibility of
+        the consent cookie to the
+
+        corresponding consent process.
+      example: abc123
+      schema:
+        type: string
+    redirectCode1:
+      name: redirectCode
+      in: query
+      description: >-
+        Code used to retrieve a redirect session. This is generaly transported
+        as a query parameter
+      example: faadsf93nlas32wx
+      schema:
+        type: string
+    code:
+      name: code
+      in: query
+      description: Oauth2 code to exchange for token.
+      example: faadsf93nlas32wx
+      schema:
+        type: string
+    redirectState:
+      name: redirectState
+      in: path
+      description: |
+        XSRF parameter used to validate an RedirectCookie. This is
+        generaly transported as a path parameter.
+      required: true
+      example: faadsf93nlas32wx
+      schema:
+        type: string
+    X-Author:
+      name: X-XSRF-TOKEN
+      in: header
+      required: true
+      description: >
+        XSRF parameter used to validate a SessionCookie. The token matches the
+        auth-id
+
+        included in the requestpath and prefixing the cookie.
+      example: abc123.faadsf93nlas32wx
+      schema:
+        type: string
+    X-XSRF-TOKEN:
+      name: X-XSRF-TOKEN
+      in: header
+      required: true
+      description: >
+        XSRF parameter used to validate a SessionCookie. The token matches the
+        auth-id
+
+        included in the requestpath and prefixing the cookie.
+      example: abc123.faadsf93nlas32wx
+      schema:
+        type: string
+  headers:
+    Location:
+      required: true
+      description: |
+        URL where User have to be redirected to in order to perform next step.
+      example: 'https://example.com/someservice/some-id/somepage?param=value'
+      schema:
+        type: string
+    X-Request-ID:
+      required: true
+      description: |
+        Unique ID that identifies this request through common workflow.
+        Shall be contained in HTTP Response as well.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    Service-Session-ID:
+      required: true
+      description: >
+        Unique ID that identifies service session. Can be used for batch
+        processing to correlate input and output.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    Authorization-Session-ID:
+      required: true
+      description: |
+        Unique ID that identifies authorization session.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    Redirect-Code:
+      required: true
+      description: >
+        Unique ID acts as a password protecting FinTech requested consent
+        specification
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    X-Request-ID1:
+      required: true
+      description: |
+        Unique ID that identifies this request through common workflow.
+      example: 99391c7e-ad88-49ec-a2ad-99ddcb1f7721
+      schema:
+        type: string
+        format: uuid
+    X-XSRF-TOKEN:
+      required: true
+      description: >
+        XSRF parameter used to validate a SessionCookie. The token matches the
+        auth-id
+
+        included in the requestpath and prefixing the cookie.
+      example: abc123.faadsf93nlas32wx
+      schema:
+        type: string
+    Set-SessionCookie:
+      name: Set-Cookie
+      description: >
+        SessionCookie used to maintain the authorization session between the
+        ConsentAuthorisationApi
+
+        and the ConsentAuthorisationUI. This cookie is validated using an
+        X-XSRF-TOKEN sent with the request header.
+
+        Notice :
+
+        * The cookie path contains the auth-id so cookie is only sent when auth
+        instance is active.
+
+        * Request consuming this cookie must present a consentAuthState from
+        their authorization header.
+
+        * X-XSRF-TOKEN is provided by the response object that sets the cookie.
+      schema:
+        type: string
+        example: >
+          Assuming auth-id=abc123
+
+          "Set-Cookie: Session_abc123=ejxs.wersdzxxc23r.asdf;
+          Path=/consent/abc123/; Max-Age=300"
+    Set-RedirectCookie:
+      name: Set-Cookie
+      description: >
+        Cookie set before redirecting PSU to ASPSP. Assuming auth-id=abc123,
+        cookie will look like
+
+        Redirect_abc123=ejts.adsfa.adfaj; Path=/consent/abc123/fromAspsp/. As a
+        user can initiate more than one sca from the same browser instance. 
+
+        * The cookie path contains the auth-id so cookie is only sent when
+        redirect url is active.
+
+        * The callback link hast the structure
+        /consent/{auth-id}/fromAspsp/{redirectState}/ok where the redirectState
+        is the XSRF parameter used to validate the RedirectCookie.
+
+        * The way the callback url is passed to the ASPSP is dependent on the
+        OpenBankingApi of the ASPSP.
+
+        * The RedirectCookie has an expiration date after which that callback
+        will no longer be accepted.
+
+        * Generaly an existing session cookie shall be seleted when PSU is
+        redirected to ASPSP.
+      schema:
+        type: string
+        example: >
+          Assuming auth-id=abc123
+
+          "Redirect_abc123=ejxs.wersdzxxc23r.asdf;
+          Path=/consent/abc123/fromAspsp/; Max-Age=1800,
+          Session_abc123=ejxs.wersdzxxc23r.asdf; Path=/consent/abc123/;
+          Max-Age=0"
+    Reset-Cookies:
+      name: Set-Cookie
+      description: |
+        Delete all relevant cookies
+      schema:
+        type: string
+        example: >
+          Assuming auth-id=abc123
+
+          "Redirect_abc123=null; Path=/consent/abc123/; Max-Age=0,
+          Session_abc123=null; Path=/consent/abc123/; Max-Age=0"
+    Location-ASPSP:
+      name: Location
+      description: >
+        This is the 30X Location Header. It contains the url used to redirect
+        PSU to the OnlineBanking of ASPSP.
+      schema:
+        type: string
+    Location-FinTechApi:
+      name: Location
+      description: >
+        This is the 30X Location Header. It contains the url used to redirect
+        PSU back to the FinTech of ASPSP.
+      schema:
+        type: string
+  securitySchemes:
+    BearerAuthOAuth:
+      description: |
+        Bearer Token.
+      type: http
+      scheme: bearer
+    accessCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'http://example.com/oauth/auth'
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+  requestBodies:
+    PaymentInitiation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/paymentInitiation'
+      required: true

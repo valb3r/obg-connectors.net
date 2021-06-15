@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "inputFile": "./tpp_banking_api_commons.yml"
+    },
+    {
+      "inputFile": "./tpp_banking_api_bank_search.yml"
+    },
+    {
+      "inputFile": "./tpp_banking_api_ais.yml"
+    },
+    {
+      "inputFile": "./tpp_banking_api_pis.yml"
+    },
+    {
+      "inputFile": "./tpp_auth_api.yml"
+    },
+    {
+      "inputFile": "./tpp_consent_api.yml"
+    },
+    {
+      "inputFile": "./tpp_banking_api_token.yml"
+    }
+  ],
+  "output": "./merged-api.yml"
+}
